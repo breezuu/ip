@@ -19,6 +19,10 @@ public class Task {
         this.isDone = false;
     }
 
+    public String getType() {
+        return "Task";
+    }
+
     @Override
     public String toString() {
         return getStatus() + " " + this.description;

@@ -47,7 +47,8 @@ public class Nexus {
                 String[] split = userInput.split(" ");
                 if (split.length < 2) {
                     printLine();
-                    System.out.println("    [NEXUS]: Invalid command. Did you forget to specify the task number? ");
+                    System.out.println("    // ERROR: INVALID COMMAND ");
+                    System.out.println("    [NEXUS]: Did you forget to specify the task number? ");
                     System.out.println("    [NEXUS]: Example: mark <indexNumber>, unmark <indexNumber> ");
                     printLine();
                 }
@@ -77,8 +78,85 @@ public class Nexus {
                     }
                 }
 
+            } else if (userInput.startsWith("todo")) {
+                if (userInput.length() < 5) {
+                    printLine();
+                    System.out.println("    // ERROR: INVALID TO-DO TASK ");
+                    System.out.println("    [NEXUS]: Did you forget to specify the 'To-Do' description? ");
+                    printLine();
+
+                } else {
+                    String description = userInput.substring(5);
+                    Task todoTask = new Todo(description);
+                    dataBank.add(todoTask);
+                    printTask(todoTask);
+                }
+
+            } else if (userInput.startsWith("deadline")) {
+                if (userInput.length() < 9) {
+                    printLine();
+                    System.out.println("    // ERROR: INVALID DEADLINE TASK ");
+                    System.out.println("    [NEXUS]: Did you forget to specify the 'Deadline' description? ");
+                    printLine();
+
+                } else {
+                    String[] split = userInput.substring(9).split(" /by ");
+                    if (split.length < 2) {
+                        printLine();
+                        System.out.println("    [NEXUS]: Did you forget to specify the deadline? ");
+                        System.out.println("    [NEXUS]: Example: deadline <date> /by <time> ");
+                        printLine();
+
+                    } else {
+                        String taskInfo = split[0];
+                        String deadline = split[1];
+                        Task deadlineTask = new Deadline(taskInfo, deadline);
+                        dataBank.add(deadlineTask);
+                        printTask(deadlineTask);
+                    }
+                }
+
+            } else if (userInput.startsWith("event")) {
+                if (userInput.length() < 6) {
+                    printLine();
+                    System.out.println("    // ERROR: INVALID EVENT TASK ");
+                    System.out.println("    [NEXUS]: Did you forget to specify the 'Event' description? ");
+                    printLine();
+
+                } else {
+                    String taskDetails = userInput.substring(6);
+                    String[] firstSplit = taskDetails.split(" /from ");
+                    if (firstSplit.length < 2) {
+                        printLine();
+                        System.out.println("    [NEXUS]: Did you forget to specify the event time? ");
+                        System.out.println("    [NEXUS]: Example: event <description> /from <startTime> /to <endTime> ");
+                        printLine();
+                        continue;
+                    }
+
+                    String eventDesc = firstSplit[0];
+
+                    String[] eventTimeSplit = firstSplit[1].split(" /to ");
+                    if (eventTimeSplit.length < 2) {
+                        printLine();
+                        System.out.println("    [NEXUS]: Did you forget to specify the event time? ");
+                        System.out.println("    [NEXUS]: Example: event <description> /from <startTime> /to <endTime> ");
+                        printLine();
+                        continue;
+                    }
+
+                    String startTime = eventTimeSplit[0];
+                    String endTime = eventTimeSplit[1];
+
+                    Event eventTask = new Event(eventDesc, startTime, endTime);
+                    dataBank.add(eventTask);
+                    printTask(eventTask);
+                }
+
             } else {
-                addData(userInput);
+                printLine();
+                System.out.println("    [NEXUS]: Invalid command. Please try again. ");
+                printLine();
             }
         }
 
@@ -101,21 +179,21 @@ public class Nexus {
         printLine();
     }
 
-    public static void addData(String s) {
-        Task newTask = new Task(s);
-        dataBank.add(newTask);
-
-        int addr = dataBank.size();
+    public static void printTask(Task task) {
+        int addr = dataBank.indexOf(task) + 1;
 
         printLine();
-        System.out.printf("    // TASK STORED @ ADDR_%d: %s\n", addr, s);
-        System.out.println("    [NEXUS]: Your task has been added into the databank successfully. ");
+        System.out.println("    // TASK STORED @ ADDR_" + addr + ":\n" + "    >>>> " + task.toString());
+        System.out.println();
+        System.out.println("    [NEXUS]: Your " + task.getType() + " task" + " has been added into the databank. ");
+        System.out.println("    // CURRENT_TOTAL: " + dataBank.size() + " TASKS");
         printLine();
     }
 
     public static void printList() {
         printLine();
-        System.out.println("    [NEXUS]: Accessing databank... \n");
+        System.out.println("    [NEXUS]: Accessing databank...");
+        System.out.println("    // CURRENT_TOTAL: " + dataBank.size() + " TASKS\n");
 
         for (int i = 0; i < dataBank.size(); i++) {
             System.out.printf("    " + "TASK@ADDR_%d. %s\n", i + 1, dataBank.get(i).toString());
