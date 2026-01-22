@@ -15,7 +15,7 @@
 
 
   ------------------------------------------------------------
-    [NEXUS]: Invalid command. Please try again.
+    // INVALID COMMAND. PLEASE TRY AGAIN.
   ------------------------------------------------------------
 
 
@@ -34,24 +34,26 @@
   ------------------------------------------------------------
     // ERROR: INVALID TO-DO TASK
     [NEXUS]: Did you forget to specify the 'To-Do' description?
+    // EXAMPLE: todo tidy up room
   ------------------------------------------------------------
 
 
   ------------------------------------------------------------
-    [NEXUS]: Did you forget to specify the deadline?
-    [NEXUS]: Example: deadline <date> /by <time>
+    // ERROR: INVALID DEADLINE TASK
+    [NEXUS]: Did you miss out on the '/by' specifier?
+    // EXAMPLE: deadline <taskDescription> /by <time>
   ------------------------------------------------------------
 
 
   ------------------------------------------------------------
-    [NEXUS]: Did you forget to specify the event timing(s)?
-    [NEXUS]: Example: event <description> /from <startTime> /to <endTime>
+    [NEXUS]: Events require BOTH '/from' and '/to' timings.
+    // EXAMPLE: event tuition /from Tues 4pm /to 6pm
   ------------------------------------------------------------
 
 
   ------------------------------------------------------------
-    [NEXUS]: Did you forget to specify the event timing(s)?
-    [NEXUS]: Example: event <description> /from <startTime> /to <endTime>
+    [NEXUS]: Events require BOTH '/from' and '/to' timings.
+    // EXAMPLE: event tuition /from Tues 4pm /to 6pm
   ------------------------------------------------------------
 
 

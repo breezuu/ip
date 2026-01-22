@@ -88,6 +88,7 @@
   ------------------------------------------------------------
     // ERROR: INVALID TO-DO TASK
     [NEXUS]: Did you forget to specify the 'To-Do' description?
+    // EXAMPLE: todo tidy up room
   ------------------------------------------------------------
 
 
