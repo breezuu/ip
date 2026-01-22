@@ -1,8 +1,10 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Nexus {
     private static final int WIDTH = 60;
     private static final String BORDER = "  " + "─".repeat(WIDTH);
+    private static final ArrayList<String> dataBank = new ArrayList<>();
     private static boolean testMode = false;
 
     public static void main(String[] args) {
@@ -39,10 +41,10 @@ public class Nexus {
             if (userInput.equalsIgnoreCase("bye")) {
                 printFarewell();
                 break;
-            }
-
-            if (!userInput.isEmpty()) {
-                printResponse(userInput);
+            } else if (userInput.equalsIgnoreCase("list")) {
+                printList();
+            } else {
+                addData(userInput);
             }
         }
 
@@ -62,6 +64,29 @@ public class Nexus {
     public static void printResponse(String command) {
         printLine();
         System.out.println("    " + command);
+        printLine();
+    }
+
+    public static void addData(String s) {
+        dataBank.add(s);
+        int addr = dataBank.size();
+
+        printLine();
+        System.out.printf("    // DATA STORED @ ADDR_%d: %s\n", addr, s);
+        System.out.println("    [NEXUS]: Your data has been added into databank successfully. ");
+        printLine();
+    }
+
+    public static void printList() {
+        printLine();
+        System.out.println("    [NEXUS]: Accessing databank... \n");
+
+        for (int i = 0; i < dataBank.size(); i++) {
+            System.out.printf("    " + "ADDR_%d. %s\n", i + 1, dataBank.get(i));
+        }
+
+        System.out.println();
+
         printLine();
     }
 
@@ -89,5 +114,7 @@ public class Nexus {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+
+        System.out.println();
     }
 }
