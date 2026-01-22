@@ -1,0 +1,10 @@
+todo build firewall
+todo debug kernel
+list
+delete 1
+list
+delete 5
+delete 1
+delete 1
+list
+bye

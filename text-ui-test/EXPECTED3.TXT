@@ -20,14 +20,12 @@
 
 
   ------------------------------------------------------------
-    // ERROR: INVALID MEMORY ADDRESS
-    [NEXUS]: Invalid task number. Please try again.
+    // ERROR: DATABANK EMPTY
   ------------------------------------------------------------
 
 
   ------------------------------------------------------------
-    // ERROR: INVALID MEMORY ADDRESS
-    [NEXUS]: Invalid task number. Please try again.
+    // ERROR: DATABANK EMPTY
   ------------------------------------------------------------
 
 

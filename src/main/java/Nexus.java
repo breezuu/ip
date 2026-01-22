@@ -46,41 +46,26 @@ public class Nexus {
                     printList();
                 } else if (userInput.startsWith("mark") || userInput.startsWith("unmark")) {
                     String[] split = userInput.split(" ");
-                    if (split.length < 2) {
-                        printLine();
-                        System.out.println("    // ERROR: INVALID COMMAND");
-                        System.out.println("    [NEXUS]: Did you forget to specify the task number?");
-                        throw new NexusException("EXAMPLE: mark 1, unmark 6");
+                    printLine();
+                    int index = validateIndex(split);
+
+                    if (split[0].equalsIgnoreCase("mark")) {
+                        dataBank.get(index - 1).mark();
                     } else {
-                        String command = split[0];
-                        int index = Integer.parseInt(split[1]);
-                        if (index < 1 || index > dataBank.size()) {
-                            printLine();
-                            System.out.println("    // ERROR: INVALID MEMORY ADDRESS");
-                            System.out.println("    [NEXUS]: Invalid task number. Please try again.");
-                            printLine();
-                        } else {
-                            if (command.equalsIgnoreCase("mark")) {
-                                dataBank.get(index - 1).mark();
-                            } else {
-                                dataBank.get(index - 1).unmark();
-                            }
-
-                            printLine();
-                            System.out.println("    [NEXUS]: Databank updated successfully.");
-                            System.out.printf("    TASK@ADDR_%d. %s", index, dataBank.get(index - 1).toString());
-                            System.out.println();
-                            printLine();
-
-                        }
+                        dataBank.get(index - 1).unmark();
                     }
+
+                    System.out.println("    [NEXUS]: Databank updated successfully.");
+                    System.out.printf("    TASK@ADDR_%d. %s", index, dataBank.get(index - 1).toString());
+                    System.out.println();
+                    printLine();
 
                 } else if (userInput.startsWith("todo")) {
                     if (userInput.length() < 5) {
                         printLine();
                         System.out.println("    // ERROR: INVALID TO-DO TASK");
                         System.out.println("    [NEXUS]: Did you forget to specify the 'To-Do' description?");
-                        throw new NexusException("EXAMPLE: todo tidy up room");
+                        throw new NexusException("// EXAMPLE: todo tidy up room");
 
                     } else {
                         String description = userInput.substring(5);
@@ -93,8 +78,8 @@ public class Nexus {
                     if (userInput.length() < 9) {
                         printLine();
                         System.out.println("    // ERROR: INVALID DEADLINE TASK");
-                        System.out.println("    [NEXUS]: Did you forget to specify the 'Deadline' description?");
-                        throw new NexusException("EXAMPLE: deadline <taskDescription> /by <time>");
+                        System.out.println("    [NEXUS]: Did you miss out on the '/by' specifier?");
+                        throw new NexusException("// EXAMPLE: deadline <taskDescription> /by <time>");
 
                     } else {
                         String[] split = userInput.substring(9).split(" /by ");
@@ -102,7 +87,7 @@ public class Nexus {
                             printLine();
                             System.out.println("    // ERROR: INVALID DEADLINE TASK");
                             System.out.println("    [NEXUS]: Did you miss out on the '/by' specifier?");
-                            throw new NexusException("EXAMPLE: deadline <taskDescription> /by <time>");
+                            throw new NexusException("// EXAMPLE: deadline <taskDescription> /by <time>");
 
                         } else {
                             String taskInfo = split[0];
@@ -118,7 +103,7 @@ public class Nexus {
                         printLine();
                         System.out.println("    // ERROR: INVALID EVENT TASK");
                         System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
-                        throw new NexusException("EXAMPLE: event tuition /from Tues 4pm /to 6pm");
+                        throw new NexusException("// EXAMPLE: event tuition /from Tues 4pm /to 6pm");
 
                     } else {
                         String taskDetails = userInput.substring(6);
@@ -126,7 +111,7 @@ public class Nexus {
                         if (firstSplit.length < 2) {
                             printLine();
                             System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
-                            throw new NexusException("EXAMPLE: event tuition /from Tues 4pm /to 6pm");
+                            throw new NexusException("// EXAMPLE: event tuition /from Tues 4pm /to 6pm");
                         }
 
                         String eventDesc = firstSplit[0];
@@ -135,7 +120,7 @@ public class Nexus {
                         if (eventTimeSplit.length < 2) {
                             printLine();
                             System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
-                            throw new NexusException("EXAMPLE: event tuition /from Tues 4pm /to 6pm");
+                            throw new NexusException("// EXAMPLE: event tuition /from Tues 4pm /to 6pm");
                         }
 
                         String startTime = eventTimeSplit[0];
@@ -146,12 +131,25 @@ public class Nexus {
                         printTask(eventTask);
                     }
 
+                } else if (userInput.startsWith("delete")) {
+                    String[] split = userInput.split(" ");
+                    printLine();
+                    int index = validateIndex(split);
+
+                    Task removedTask = dataBank.remove(index - 1);
+
+                    System.out.println("    [NEXUS]: Databank entry purged.");
+                    System.out.println("    >>>> " + removedTask.toString());
+                    String numTasks = dataBank.size() == 1 ? " TASK" : " TASKS";
+                    System.out.println("    // CURRENT_TOTAL: " + dataBank.size() + numTasks);
+                    printLine();
+
                 } else {
                     printLine();
-                    throw new NexusException("INVALID COMMAND. PLEASE TRY AGAIN.");
+                    throw new NexusException("// INVALID COMMAND. PLEASE TRY AGAIN.");
                 }
             } catch (NexusException e) {
-                System.out.println("    // " + e.getMessage());
+                System.out.println("    " + e.getMessage());
                 printLine();
             }
         }
@@ -224,5 +222,29 @@ public class Nexus {
         }
 
         System.out.println();
+    }
+
+    private static int validateIndex(String[] split) throws NexusException {
+        if (split.length < 2) {
+            System.out.println("    [NEXUS]: Please specify the task number you wish to mark or delete.");
+            throw new NexusException("// EXAMPLE: mark 6, delete 7");
+        }
+
+        try {
+            int index = Integer.parseInt(split[1]);
+
+            if (dataBank.isEmpty()) {
+                throw new NexusException("// ERROR: DATABANK EMPTY");
+
+            } else if (index < 1 || index > dataBank.size()) {
+                System.out.println("    // ERROR: TASK NUMBER OUT OF BOUNDS");
+                String numTasks = dataBank.size() > 1 ? " TASKS" : " TASK";
+                throw new NexusException("// CURRENT_TOTAL: " + dataBank.size() + numTasks);
+            }
+            return index;
+
+        } catch (NumberFormatException e) {
+            throw new NexusException("// ERROR: PROVIDE VALID INDEX NUMBER");
+        }
     }
 }

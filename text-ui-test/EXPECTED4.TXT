@@ -16,7 +16,7 @@
 
   ------------------------------------------------------------
     // TASK STORED @ ADDR_1:
-    >>>> [T][ ] read book
+    >>>> [T][ ] build firewall
 
     [NEXUS]: Your todo task has been added into the databank.
     // CURRENT_TOTAL: 1 TASK
@@ -25,70 +25,58 @@
 
   ------------------------------------------------------------
     // TASK STORED @ ADDR_2:
-    >>>> [D][ ] return book (by: Sunday)
+    >>>> [T][ ] debug kernel
 
-    [NEXUS]: Your deadline task has been added into the databank.
+    [NEXUS]: Your todo task has been added into the databank.
     // CURRENT_TOTAL: 2 TASKS
   ------------------------------------------------------------
 
 
   ------------------------------------------------------------
-    // TASK STORED @ ADDR_3:
-    >>>> [E][ ] project meeting (from: Mon 2pm to: 4pm)
+    [NEXUS]: Accessing databank...
+    // CURRENT_TOTAL: 2 TASKS
 
-    [NEXUS]: Your event task has been added into the databank.
-    // CURRENT_TOTAL: 3 TASKS
+    TASK@ADDR_1. [T][ ] build firewall
+    TASK@ADDR_2. [T][ ] debug kernel
+  ------------------------------------------------------------
+
+
+  ------------------------------------------------------------
+    [NEXUS]: Databank entry purged.
+    >>>> [T][ ] build firewall
+    // CURRENT_TOTAL: 1 TASK
   ------------------------------------------------------------
 
 
   ------------------------------------------------------------
     [NEXUS]: Accessing databank...
-    // CURRENT_TOTAL: 3 TASKS
+    // CURRENT_TOTAL: 1 TASK
 
-    TASK@ADDR_1. [T][ ] read book
-    TASK@ADDR_2. [D][ ] return book (by: Sunday)
-    TASK@ADDR_3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    [NEXUS]: Databank updated successfully.
-    TASK@ADDR_1. [T][X] read book
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    [NEXUS]: Databank updated successfully.
-    TASK@ADDR_2. [D][X] return book (by: Sunday)
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    [NEXUS]: Databank updated successfully.
-    TASK@ADDR_1. [T][ ] read book
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    [NEXUS]: Accessing databank...
-    // CURRENT_TOTAL: 3 TASKS
-
-    TASK@ADDR_1. [T][ ] read book
-    TASK@ADDR_2. [D][X] return book (by: Sunday)
-    TASK@ADDR_3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+    TASK@ADDR_1. [T][ ] debug kernel
   ------------------------------------------------------------
 
 
   ------------------------------------------------------------
     // ERROR: TASK NUMBER OUT OF BOUNDS
-    // CURRENT_TOTAL: 3 TASKS
+    // CURRENT_TOTAL: 1 TASK
   ------------------------------------------------------------
 
 
   ------------------------------------------------------------
-    // ERROR: INVALID TO-DO TASK
-    [NEXUS]: Did you forget to specify the 'To-Do' description?
-    // EXAMPLE: todo tidy up room
+    [NEXUS]: Databank entry purged.
+    >>>> [T][ ] debug kernel
+    // CURRENT_TOTAL: 0 TASKS
+  ------------------------------------------------------------
+
+
+  ------------------------------------------------------------
+    // ERROR: DATABANK EMPTY
+  ------------------------------------------------------------
+
+
+  ------------------------------------------------------------
+    [NEXUS]: Accessing databank...
+    // NO TASKS FOUND
   ------------------------------------------------------------
 
 
