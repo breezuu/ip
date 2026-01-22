@@ -15,67 +15,13 @@
 
 
   ------------------------------------------------------------
-    // TASK STORED @ ADDR_1:
-    >>>> [T][ ] read book
-
-    [NEXUS]: Your todo task has been added into the databank.
-    // CURRENT_TOTAL: 1 TASK
+    [NEXUS]: Invalid command. Please try again.
   ------------------------------------------------------------
 
 
   ------------------------------------------------------------
-    // TASK STORED @ ADDR_2:
-    >>>> [D][ ] return book (by: Sunday)
-
-    [NEXUS]: Your deadline task has been added into the databank.
-    // CURRENT_TOTAL: 2 TASKS
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    // TASK STORED @ ADDR_3:
-    >>>> [E][ ] project meeting (from: Mon 2pm to: 4pm)
-
-    [NEXUS]: Your event task has been added into the databank.
-    // CURRENT_TOTAL: 3 TASKS
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    [NEXUS]: Accessing databank...
-    // CURRENT_TOTAL: 3 TASKS
-
-    TASK@ADDR_1. [T][ ] read book
-    TASK@ADDR_2. [D][ ] return book (by: Sunday)
-    TASK@ADDR_3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    [NEXUS]: Databank updated successfully.
-    TASK@ADDR_1. [T][X] read book
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    [NEXUS]: Databank updated successfully.
-    TASK@ADDR_2. [D][X] return book (by: Sunday)
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    [NEXUS]: Databank updated successfully.
-    TASK@ADDR_1. [T][ ] read book
-  ------------------------------------------------------------
-
-
-  ------------------------------------------------------------
-    [NEXUS]: Accessing databank...
-    // CURRENT_TOTAL: 3 TASKS
-
-    TASK@ADDR_1. [T][ ] read book
-    TASK@ADDR_2. [D][X] return book (by: Sunday)
-    TASK@ADDR_3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+    // ERROR: INVALID MEMORY ADDRESS
+    [NEXUS]: Invalid task number. Please try again.
   ------------------------------------------------------------
 
 
@@ -88,6 +34,30 @@
   ------------------------------------------------------------
     // ERROR: INVALID TO-DO TASK
     [NEXUS]: Did you forget to specify the 'To-Do' description?
+  ------------------------------------------------------------
+
+
+  ------------------------------------------------------------
+    [NEXUS]: Did you forget to specify the deadline?
+    [NEXUS]: Example: deadline <date> /by <time>
+  ------------------------------------------------------------
+
+
+  ------------------------------------------------------------
+    [NEXUS]: Did you forget to specify the event timing(s)?
+    [NEXUS]: Example: event <description> /from <startTime> /to <endTime>
+  ------------------------------------------------------------
+
+
+  ------------------------------------------------------------
+    [NEXUS]: Did you forget to specify the event timing(s)?
+    [NEXUS]: Example: event <description> /from <startTime> /to <endTime>
+  ------------------------------------------------------------
+
+
+  ------------------------------------------------------------
+    [NEXUS]: Accessing databank...
+    // NO TASKS FOUND
   ------------------------------------------------------------
 
 

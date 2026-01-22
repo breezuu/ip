@@ -1,0 +1,9 @@
+test
+mark 10
+unmark 0
+todo
+deadline test /by
+event test /from
+event test /from 2pm /to
+list
+bye
