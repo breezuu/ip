@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Nexus {
     private static final int WIDTH = 60;
     private static final String BORDER = "  " + "─".repeat(WIDTH);
-    private static final ArrayList<String> dataBank = new ArrayList<>();
+    private static final ArrayList<Task> dataBank = new ArrayList<>();
     private static boolean testMode = false;
 
     public static void main(String[] args) {
@@ -43,6 +43,40 @@ public class Nexus {
                 break;
             } else if (userInput.equalsIgnoreCase("list")) {
                 printList();
+            } else if (userInput.startsWith("mark") || userInput.startsWith("unmark")) {
+                String[] split = userInput.split(" ");
+                if (split.length < 2) {
+                    printLine();
+                    System.out.println("    [NEXUS]: Invalid command. Did you forget to specify the task number? ");
+                    System.out.println("    [NEXUS]: Example: mark <indexNumber>, unmark <indexNumber> ");
+                    printLine();
+                }
+
+                else {
+                    String command = split[0];
+                    int index = Integer.parseInt(split[1]);
+
+                    if ((index - 1) < dataBank.size()) {
+                        if (command.equalsIgnoreCase("mark")) {
+                            dataBank.get(index - 1).mark();
+                        } else {
+                            dataBank.get(index - 1).unmark();
+                        }
+
+                        printLine();
+                        System.out.println("    [NEXUS]: Databank updated successfully. ");
+                        System.out.printf("    TASK@ADDR_%d. %s", index, dataBank.get(index - 1).toString());
+                        System.out.println();
+                        printLine();
+
+                    } else {
+                        printLine();
+                        System.out.println("    // ERROR: INVALID MEMORY ADDRESS ");
+                        System.out.println("    [NEXUS]: Invalid task number. Please try again. ");
+                        printLine();
+                    }
+                }
+
             } else {
                 addData(userInput);
             }
@@ -68,12 +102,14 @@ public class Nexus {
     }
 
     public static void addData(String s) {
-        dataBank.add(s);
+        Task newTask = new Task(s);
+        dataBank.add(newTask);
+
         int addr = dataBank.size();
 
         printLine();
-        System.out.printf("    // DATA STORED @ ADDR_%d: %s\n", addr, s);
-        System.out.println("    [NEXUS]: Your data has been added into databank successfully. ");
+        System.out.printf("    // TASK STORED @ ADDR_%d: %s\n", addr, s);
+        System.out.println("    [NEXUS]: Your task has been added into the databank successfully. ");
         printLine();
     }
 
@@ -82,7 +118,7 @@ public class Nexus {
         System.out.println("    [NEXUS]: Accessing databank... \n");
 
         for (int i = 0; i < dataBank.size(); i++) {
-            System.out.printf("    " + "ADDR_%d. %s\n", i + 1, dataBank.get(i));
+            System.out.printf("    " + "TASK@ADDR_%d. %s\n", i + 1, dataBank.get(i).toString());
         }
 
         System.out.println();
@@ -94,7 +130,7 @@ public class Nexus {
         int maxWidth = 40;
         String[] bootSteps = {
                 "// INITIALIZING NEXUS ",
-                "// LOADING DATA "
+                "// LOADING PRECEPTS "
         };
 
         try {
