@@ -1,11 +1,16 @@
-public class Todo extends Task {
-    public Todo(String desc) {
-        super(desc);
+class Todo extends Task {
+    public Todo(String desc, boolean isDone) {
+        super(desc, isDone);
     }
 
     @Override
     public String getType() {
-        return "todo";
+        return "T";
+    }
+
+    @Override
+    public String saveString() {
+        return "T" + " | " + (isDone ? "1" : "0") + " | " + description;
     }
 
     @Override

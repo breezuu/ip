@@ -1,4 +1,4 @@
-public class NexusException extends Exception {
+class NexusException extends Exception {
     public NexusException(String message) {
         super(message);
     }

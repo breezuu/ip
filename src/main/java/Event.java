@@ -1,16 +1,21 @@
-public class Event extends Task {
-    private final String startTime;
-    private final String endTime;
+class Event extends Task {
+    private String startTime;
+    private String endTime;
 
-    public Event(String desc, String start, String end) {
-        super(desc);
+    public Event(String desc, String start, String end, boolean isDone) {
+        super(desc, isDone);
         this.startTime = start;
         this.endTime = end;
     }
 
     @Override
     public String getType() {
-        return "event";
+        return "E";
+    }
+
+    @Override
+    public String saveString() {
+        return "E" + " | " + (isDone ? "1" : "0") + " | " + description + " | " + startTime + " | " + endTime;
     }
 
     @Override
