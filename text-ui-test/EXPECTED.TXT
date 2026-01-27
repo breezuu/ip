@@ -18,7 +18,7 @@
     // TASK STORED @ ADDR_1:
     >>>> [T][ ] read book
 
-    [NEXUS]: Your todo task has been added into the databank.
+    [NEXUS]: Your Todo task has been added into the databank.
     // CURRENT_TOTAL: 1 TASK
   ------------------------------------------------------------
 
@@ -27,7 +27,7 @@
     // TASK STORED @ ADDR_2:
     >>>> [D][ ] return book (by: Sunday)
 
-    [NEXUS]: Your deadline task has been added into the databank.
+    [NEXUS]: Your Deadline task has been added into the databank.
     // CURRENT_TOTAL: 2 TASKS
   ------------------------------------------------------------
 
@@ -36,7 +36,7 @@
     // TASK STORED @ ADDR_3:
     >>>> [E][ ] project meeting (from: Mon 2pm to: 4pm)
 
-    [NEXUS]: Your event task has been added into the databank.
+    [NEXUS]: Your Event task has been added into the databank.
     // CURRENT_TOTAL: 3 TASKS
   ------------------------------------------------------------
 

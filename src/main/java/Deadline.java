@@ -1,14 +1,19 @@
-public class Deadline extends Task {
-    private final String deadline;
+class Deadline extends Task {
+    private String deadline;
 
-    public Deadline(String desc, String deadline) {
-        super(desc);
+    public Deadline(String desc, String deadline, boolean isDone) {
+        super(desc, isDone);
         this.deadline = deadline;
     }
 
     @Override
     public String getType() {
-        return "deadline";
+        return "D";
+    }
+
+    @Override
+    public String saveString() {
+        return "D" + " | " + (isDone ? "1" : "0") + " | " + description + " | " + deadline;
     }
 
     @Override
