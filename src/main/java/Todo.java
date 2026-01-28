@@ -14,6 +14,11 @@ class Todo extends Task {
     }
 
     @Override
+    public boolean isDuringDate(String date) {
+        return false; // To-do tasks have no deadline/date
+    }
+
+    @Override
     public String toString() {
         return "[T]" + super.toString();
     }

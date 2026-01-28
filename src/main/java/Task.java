@@ -27,6 +27,10 @@ class Task {
         return "Task" + " | " + (isDone ? "1" : "0") + " | " + description;
     }
 
+    public boolean isDuringDate(String date) {
+        return false; // Tasks have no deadline/date by default
+    }
+
     @Override
     public String toString() {
         return getStatus() + " " + this.description;

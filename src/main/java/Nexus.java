@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +12,7 @@ class Nexus {
     private static final int WIDTH = 60;
     private static final String BORDER = "  " + "-".repeat(WIDTH);
     private static final List<Task> DATABANK = new ArrayList<>();
+    private static final String[] TASK_TYPES = new String[]{"Todo", "Deadline", "Event"};
     private static boolean isTesting = false;
 
     public static void main(String[] args) {
@@ -53,7 +55,8 @@ class Nexus {
 
             try {
                 if (userInput.equalsIgnoreCase("list")) {
-                    printList();
+                    printLine();
+                    printList(DATABANK);
                 } else if (userInput.startsWith("mark") || userInput.startsWith("unmark")) {
                     String[] split = userInput.split(" ");
                     printLine();
@@ -92,7 +95,7 @@ class Nexus {
                         printLine();
                         System.out.println("    // ERROR: INVALID DEADLINE TASK");
                         System.out.println("    [NEXUS]: Did you miss out on the '/by' specifier?");
-                        throw new NexusException("// EXAMPLE: deadline <taskDescription> /by <time>");
+                        throw new NexusException("// EXAMPLE: 'deadline quiz /by 01/01/2002 12:00 PM'");
 
                     } else {
                         String[] split = userInput.substring(9).split(" /by ");
@@ -100,15 +103,20 @@ class Nexus {
                             printLine();
                             System.out.println("    // ERROR: INVALID DEADLINE TASK");
                             System.out.println("    [NEXUS]: Did you miss out on the '/by' specifier?");
-                            throw new NexusException("// EXAMPLE: deadline <taskDescription> /by <time>");
+                            throw new NexusException("// EXAMPLE: 'deadline quiz /by 01/01/2002 12:00 PM'");
 
                         } else {
-                            String taskInfo = split[0];
-                            String deadline = split[1];
-                            Task deadlineTask = new Deadline(taskInfo, deadline, false);
-                            DATABANK.add(deadlineTask);
-                            saveTasks(DATABANK);
-                            printTask(deadlineTask);
+                            try {
+                                String taskInfo = split[0];
+                                String deadline = split[1];
+                                Task deadlineTask = new Deadline(taskInfo, deadline, false);
+                                DATABANK.add(deadlineTask);
+                                saveTasks(DATABANK);
+                                printTask(deadlineTask);
+                            } catch (DateTimeParseException e) {
+                                System.out.println("    [NEXUS]: Did you follow the date and time format (12-hour)?");
+                                System.out.println("    // e.g. 'deadline quiz /by 01/01/2002 10:00 AM'");
+                            }
                         }
                     }
 
@@ -117,35 +125,39 @@ class Nexus {
                         printLine();
                         System.out.println("    // ERROR: INVALID EVENT TASK");
                         System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
-                        throw new NexusException("// EXAMPLE: event tuition /from Tues 4pm /to 6pm");
+                        throw new NexusException("// EXAMPLE: event tuition /from <startTime> /to <endTime>");
 
                     } else {
-                        String taskDetails = userInput.substring(6);
-                        String[] firstSplit = taskDetails.split(" /from ");
-                        if (firstSplit.length < 2) {
-                            printLine();
-                            System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
-                            throw new NexusException("// EXAMPLE: event tuition /from Tues 4pm /to 6pm");
+                        try {
+                            String taskDetails = userInput.substring(6);
+                            String[] firstSplit = taskDetails.split(" /from ");
+                            if (firstSplit.length < 2) {
+                                printLine();
+                                System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
+                                throw new NexusException("// EXAMPLE: event tuition /from <startTime> /to <endTime>");
+                            }
+
+                            String eventDesc = firstSplit[0];
+
+                            String[] eventTimeSplit = firstSplit[1].split(" /to ");
+                            if (eventTimeSplit.length < 2) {
+                                printLine();
+                                System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
+                                throw new NexusException("// EXAMPLE: event tuition /from <startTime> /to <endTime>");
+                            }
+
+                            String startTime = eventTimeSplit[0];
+                            String endTime = eventTimeSplit[1];
+
+                            Event eventTask = new Event(eventDesc, startTime, endTime, false);
+                            DATABANK.add(eventTask);
+                            saveTasks(DATABANK);
+                            printTask(eventTask);
+                        } catch (DateTimeParseException e) {
+                            System.out.println("    [NEXUS]: Did you follow the date and time format (12-hour)?");
+                            System.out.println("    // e.g. 'event x /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM'");
                         }
-
-                        String eventDesc = firstSplit[0];
-
-                        String[] eventTimeSplit = firstSplit[1].split(" /to ");
-                        if (eventTimeSplit.length < 2) {
-                            printLine();
-                            System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
-                            throw new NexusException("// EXAMPLE: event tuition /from Tues 4pm /to 6pm");
-                        }
-
-                        String startTime = eventTimeSplit[0];
-                        String endTime = eventTimeSplit[1];
-
-                        Event eventTask = new Event(eventDesc, startTime, endTime, false);
-                        DATABANK.add(eventTask);
-                        saveTasks(DATABANK);
-                        printTask(eventTask);
                     }
-
                 } else if (userInput.startsWith("delete")) {
                     String[] split = userInput.split(" ");
                     printLine();
@@ -160,6 +172,54 @@ class Nexus {
                     String numTasks = DATABANK.size() == 1 ? " TASK" : " TASKS";
                     System.out.println("    // CURRENT_TOTAL: " + DATABANK.size() + numTasks);
                     printLine();
+
+                } else if (userInput.startsWith("check")) {
+                    printLine();
+                    System.out.println("    [NEXUS]: Type the number beside ADDR for the task type you wish to check:");
+                    System.out.println("    [NEXUS]: NOTE: Typing an invalid number will exit the check!");
+                    for (int i = 0; i < TASK_TYPES.length; i++) {
+                        System.out.println("    " + "TYPE@ADDR_" + (i + 1) + ". " + TASK_TYPES[i]);
+                    }
+                    printLine();
+
+                    System.out.println();
+                    String taskToCheck = sc.nextLine().trim();
+                    String date;
+                    List<Task> result;
+                    System.out.println();
+
+                    printLine();
+                    switch (taskToCheck) {
+                    case "1": // Todo
+                        System.out.println("    [NEXUS]: Checking for existing to-do tasks...");
+                        result = DATABANK.stream()
+                                .filter(t -> t.getType().equals("T"))
+                                .toList();
+                        printList(result);
+                        break;
+                    case "2": // Deadline
+                        System.out.println("    [NEXUS]: Specify the date (in DD/MM/YYYY format) you wish to check:");
+                        date = sc.nextLine().trim();
+                        System.out.println("    [NEXUS]: Checking for existing deadlines with the specified date...");
+                        result = DATABANK.stream()
+                                .filter(t -> t.getType().equals("D"))
+                                .filter(t -> t.isDuringDate(date))
+                                .toList();
+                        printList(result);
+                        break;
+                    case "3": // Event
+                        System.out.println("    [NEXUS]: Specify the date (in DD/MM/YYYY format) you wish to check:");
+                        date = sc.nextLine().trim();
+                        System.out.println("    [NEXUS]: Checking for existing events with the specified date...");
+                        result = DATABANK.stream()
+                                .filter(t -> t.getType().equals("E"))
+                                .filter(t -> t.isDuringDate(date))
+                                .toList();
+                        printList(result);
+                        break;
+                    default:
+                        System.out.println("    [NEXUS]: You are checking for an invalid task type. Exiting check.");
+                    }
 
                 } else {
                     printLine();
@@ -211,15 +271,14 @@ class Nexus {
         printLine();
     }
 
-    public static void printList() {
-        printLine();
+    public static void printList(List<Task> tasks) {
         System.out.println("    [NEXUS]: Accessing databank...");
-        if (!DATABANK.isEmpty()) {
-            String numTasks = DATABANK.size() > 1 ? " TASKS" : " TASK";
-            System.out.println("    // CURRENT_TOTAL: " + DATABANK.size() + numTasks + "\n");
+        if (!tasks.isEmpty()) {
+            String numTasks = tasks.size() > 1 ? " TASKS" : " TASK";
+            System.out.println("    // CURRENT_TOTAL: " + tasks.size() + numTasks + "\n");
 
-            for (int i = 0; i < DATABANK.size(); i++) {
-                System.out.printf("    " + "TASK@ADDR_%d. %s\n", i + 1, DATABANK.get(i).toString());
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.printf("    " + "TASK@ADDR_%d. %s\n", i + 1, tasks.get(i).toString());
             }
         } else {
             System.out.println("    // NO TASKS FOUND");

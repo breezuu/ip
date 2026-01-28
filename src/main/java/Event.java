@@ -1,11 +1,23 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 class Event extends Task {
-    private String startTime;
-    private String endTime;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
+    private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("d/M/yyyy h:mm a", Locale.ENGLISH);
+    private final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("MMM dd yyyy h:mm a", Locale.ENGLISH);
 
     public Event(String desc, String start, String end, boolean isDone) {
         super(desc, isDone);
-        this.startTime = start;
-        this.endTime = end;
+        this.startTime = LocalDateTime.parse(start, inputFormat);
+        this.endTime = LocalDateTime.parse(end, inputFormat);
+    }
+
+    @Override
+    public boolean isDuringDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+        return this.startTime.format(formatter).equals(date);
     }
 
     @Override
@@ -15,11 +27,13 @@ class Event extends Task {
 
     @Override
     public String saveString() {
-        return "E" + " | " + (isDone ? "1" : "0") + " | " + description + " | " + startTime + " | " + endTime;
+        return "E" + " | " + (isDone ? "1" : "0") + " | " + description + " | " + startTime.format(inputFormat)
+                + " | " + endTime.format(inputFormat);
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + startTime + " to: " + endTime + ")";
+        return "[E]" + super.toString() + " (from: " + startTime.format(outputFormat) + " to: "
+                + endTime.format(outputFormat) + ")";
     }
 }
