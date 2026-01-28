@@ -1,0 +1,92 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+class Storage {
+    private final String filePath;
+
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public ArrayList<Task> loadTasks() throws NexusException {
+        ArrayList<Task> loadedTasks = new ArrayList<>();
+
+        Path filePath = Paths.get("data", "databank.txt");
+
+        try {
+            checkDirectory(); // Check if the 'data' directory exists
+
+            if (Files.notExists(filePath)) { // If the file 'databank.txt' does not exist...
+                Files.createFile(filePath); // Create the file
+            }
+
+            List<String> lines = Files.readAllLines(filePath);
+
+            for (String s : lines) {
+                try {
+                    Task task = parseTasks(s);
+                    loadedTasks.add(task);
+                } catch (NexusException e) {
+                    System.out.println("    " + e.getMessage());
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("    // ERROR: " + e.getMessage());
+        }
+
+        return loadedTasks;
+    }
+
+    public Task parseTasks(String s) throws NexusException {
+        String[] components = s.split("\\s*\\|\\s*"); // Splits the task based on '|'
+        if (components.length < 3) {
+            throw new NexusException("// ERROR: INVALID TASK FORMAT");
+        }
+
+        String taskType = components[0].trim();
+        boolean isDone = components[1].trim().equals("1");
+        String taskDesc = components[2].trim();
+
+        switch (taskType) {
+        case "T":
+            return new Todo(taskDesc, isDone);
+        case "D":
+            if (components.length < 4) {
+                throw new NexusException("// ERROR: CORRUPTED DEADLINE FORMAT");
+            }
+            return new Deadline(taskDesc, components[3], isDone);
+        case "E":
+            if (components.length < 5) {
+                throw new NexusException("// ERROR: CORRUPTED EVENT FORMAT");
+            }
+            return new Event(taskDesc, components[3], components[4], isDone);
+        default:
+            throw new NexusException("// ERROR: INVALID TASK TYPE");
+        }
+    }
+
+    public void saveTasks(List<Task> tasks) {
+        try {
+            FileWriter fw = new FileWriter("./data/databank.txt");
+            for (Task t : tasks) {
+                fw.write(t.saveString() + System.lineSeparator());
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("    // ERROR: " + e.getMessage());
+        }
+    }
+
+    public void checkDirectory() throws IOException {
+        Path path = Paths.get("data");
+        if (Files.notExists(path)) {
+            Files.createDirectory(path);
+        }
+    }
+}
