@@ -1,10 +1,12 @@
-public class Task {
+import java.time.format.DateTimeFormatter;
+
+class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String desc) {
+    public Task(String desc, boolean isDone) {
         this.description = desc;
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
     public String getStatus() {
@@ -21,6 +23,14 @@ public class Task {
 
     public String getType() {
         return "Task";
+    }
+
+    public String saveString() {
+        return "Task" + " | " + (isDone ? "1" : "0") + " | " + description;
+    }
+
+    public boolean isDuringDate(String date) {
+        return false; // Tasks have no deadline/date by default
     }
 
     @Override

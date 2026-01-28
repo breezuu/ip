@@ -22,5 +22,8 @@ src/main/resources/docs/
 *.iml
 bin/
 
+# Nexus local databank
+/data/
+
 /text-ui-test/ACTUAL*.TXT
 /text-ui-test/EXPECTED-UNIX.TXT
