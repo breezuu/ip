@@ -43,6 +43,7 @@ application {
 }
 
 shadowJar {
+    archiveFileName = 'nexus.jar'
     archiveBaseName = "nexus"
     archiveClassifier = null
 }
