@@ -1,6 +1,14 @@
+package nexus.commands;
+
 import java.time.format.DateTimeParseException;
 
-class AddDeadlineCommand extends Command {
+import nexus.exception.NexusException;
+import nexus.storage.Storage;
+import nexus.tasks.Deadline;
+import nexus.tasks.TaskList;
+import nexus.ui.Ui;
+
+public class AddDeadlineCommand extends Command {
     private final String description;
     private final String deadline;
     private final boolean isDone;

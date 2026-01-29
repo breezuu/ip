@@ -1,6 +1,14 @@
+package nexus.commands;
+
 import java.time.format.DateTimeParseException;
 
-class AddEventCommand extends Command {
+import nexus.exception.NexusException;
+import nexus.storage.Storage;
+import nexus.tasks.Event;
+import nexus.tasks.TaskList;
+import nexus.ui.Ui;
+
+public class AddEventCommand extends Command {
     private final String description;
     private final String startTime;
     private final String endTime;

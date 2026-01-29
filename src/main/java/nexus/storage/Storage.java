@@ -1,3 +1,5 @@
+package nexus.storage;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,7 +8,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-class Storage {
+import nexus.exception.NexusException;
+import nexus.tasks.Deadline;
+import nexus.tasks.Event;
+import nexus.tasks.Task;
+import nexus.tasks.Todo;
+
+public class Storage {
     private final String filePath;
 
     public Storage(String filePath) {

@@ -1,4 +1,6 @@
-class Task {
+package nexus.tasks;
+
+public class Task {
     protected String description;
     protected boolean isDone;
 

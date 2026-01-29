@@ -1,4 +1,6 @@
-class Todo extends Task {
+package nexus.tasks;
+
+public class Todo extends Task {
     public Todo(String desc, boolean isDone) {
         super(desc, isDone);
     }

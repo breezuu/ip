@@ -1,6 +1,10 @@
+package nexus.tasks;
+
 import java.util.ArrayList;
 
-class TaskList {
+import nexus.exception.NexusException;
+
+public class TaskList {
     private final ArrayList<Task> tasks;
     private final String[] taskTypes = new String[]{"Todo", "Deadline", "Event"};
 
@@ -32,7 +36,7 @@ class TaskList {
         return this.tasks.size();
     }
 
-    public int validateIndex(int index) throws NexusException {
+    public void validateIndex(int index) throws NexusException {
         if (this.tasks.isEmpty()) {
             throw new NexusException("// ERROR: DATABANK EMPTY");
 
@@ -41,7 +45,5 @@ class TaskList {
             String numTasks = this.tasks.size() > 1 ? " TASKS" : " TASK";
             throw new NexusException("// CURRENT_TOTAL: " + this.tasks.size() + numTasks);
         }
-
-        return index;
     }
 }

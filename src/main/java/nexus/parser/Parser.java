@@ -1,4 +1,18 @@
-class Parser {
+package nexus.parser;
+
+import nexus.commands.AddDeadlineCommand;
+import nexus.commands.AddEventCommand;
+import nexus.commands.AddTodoCommand;
+import nexus.commands.CheckCommand;
+import nexus.commands.Command;
+import nexus.commands.DeleteCommand;
+import nexus.commands.ExitCommand;
+import nexus.commands.ListCommand;
+import nexus.commands.MarkCommand;
+import nexus.commands.UnmarkCommand;
+import nexus.exception.NexusException;
+
+public class Parser {
     public static Command parse(String fullCommand) throws NexusException {
         String[] split = fullCommand.trim().split(" ", 2);
         String keyword = split[0].toLowerCase();
@@ -22,7 +36,7 @@ class Parser {
         case "delete":
             return new DeleteCommand(parseIndex(split));
         case "check":
-            return new CheckCommand(args);
+            return new CheckCommand(parseDate(args));
         default:
             throw new NexusException("INVALID COMMAND. PLEASE TRY AGAIN.");
         }
@@ -39,6 +53,15 @@ class Parser {
         } catch (NumberFormatException e) {
             throw new NexusException("// ERROR: PROVIDE A VALID INDEX NUMBER");
         }
+    }
+
+    public static String parseDate(String date) throws NexusException {
+        if (date.length() < 2 || date.isBlank()) {
+            System.out.println("    [NEXUS]: Please specify the date you wish to check.");
+            throw new NexusException("// EXAMPLE: check 1/1/2002");
+        }
+
+        return date;
     }
 
     private static Command prepareTodo(String info) throws NexusException {

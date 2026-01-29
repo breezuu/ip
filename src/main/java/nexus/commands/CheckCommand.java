@@ -1,8 +1,16 @@
+package nexus.commands;
+
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-class CheckCommand extends Command {
+import nexus.exception.NexusException;
+import nexus.storage.Storage;
+import nexus.tasks.Task;
+import nexus.tasks.TaskList;
+import nexus.ui.Ui;
+
+public class CheckCommand extends Command {
     private final String dateToCheck;
 
     public CheckCommand(String date) {

@@ -1,6 +1,14 @@
+package nexus.commands;
+
 import java.util.ArrayList;
 
-class MarkCommand extends Command {
+import nexus.exception.NexusException;
+import nexus.storage.Storage;
+import nexus.tasks.Task;
+import nexus.tasks.TaskList;
+import nexus.ui.Ui;
+
+public class MarkCommand extends Command {
     private final int index;
 
     public MarkCommand(int index) {
@@ -17,6 +25,6 @@ class MarkCommand extends Command {
 
         storage.saveTasks(taskList);
 
-        ui.printTaskUpdated(taskList.get(index - 1), taskList, index);
+        ui.printTaskUpdated(taskList, index);
     }
 }

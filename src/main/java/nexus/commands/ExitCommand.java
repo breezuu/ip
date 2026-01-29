@@ -1,4 +1,11 @@
-class ExitCommand extends Command {
+package nexus.commands;
+
+import nexus.exception.NexusException;
+import nexus.storage.Storage;
+import nexus.tasks.TaskList;
+import nexus.ui.Ui;
+
+public class ExitCommand extends Command {
     public ExitCommand() {
         // Do nothing
     }

@@ -1,6 +1,14 @@
+package nexus.commands;
+
 import java.util.ArrayList;
 
-class UnmarkCommand extends Command {
+import nexus.exception.NexusException;
+import nexus.storage.Storage;
+import nexus.tasks.Task;
+import nexus.tasks.TaskList;
+import nexus.ui.Ui;
+
+public class UnmarkCommand extends Command {
     private final int index;
 
     public UnmarkCommand(int index) {
@@ -17,6 +25,6 @@ class UnmarkCommand extends Command {
 
         storage.saveTasks(taskList);
 
-        ui.printTaskUpdated(taskList.get(index - 1), taskList, index);
+        ui.printTaskUpdated(taskList, index);
     }
 }

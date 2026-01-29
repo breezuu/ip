@@ -1,8 +1,10 @@
+package nexus.tasks;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-class Event extends Task {
+public class Event extends Task {
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("d/M/yyyy h:mm a", Locale.ENGLISH);

@@ -1,3 +1,12 @@
+package nexus;
+
+import nexus.commands.Command;
+import nexus.exception.NexusException;
+import nexus.parser.Parser;
+import nexus.storage.Storage;
+import nexus.tasks.TaskList;
+import nexus.ui.Ui;
+
 class Nexus {
     private final Storage storage;
     private TaskList tasks;
