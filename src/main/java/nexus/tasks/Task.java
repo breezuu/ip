@@ -29,6 +29,10 @@ public class Task {
         return this.description;
     }
 
+    public boolean isDone() {
+        return this.isDone;
+    }
+
     public String saveString() {
         return "Task" + " | " + (isDone ? "1" : "0") + " | " + description;
     }

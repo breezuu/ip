@@ -14,6 +14,13 @@ public class AddEventCommand extends Command {
     private final String endTime;
     private final boolean isDone;
 
+    /**
+     * Constructor for AddEventCommand.
+     * @param desc Description of the event task.
+     * @param startTime Start time of the event in the format "dd/MM/yyyy HH:mm".
+     * @param endTime End time of the event in the format "dd/MM/yyyy HH:mm".
+     * @param isDone Whether the task is done initially.
+     */
     public AddEventCommand(String desc, String startTime, String endTime, boolean isDone) {
         this.description = desc;
         this.startTime = startTime;
@@ -21,6 +28,13 @@ public class AddEventCommand extends Command {
         this.isDone = isDone;
     }
 
+    /**
+     * Executes the command to add an event task to the task list.
+     * @param tasks The task list to which the event task will be added.
+     * @param ui The user interface for displaying messages.
+     * @param storage The storage for saving tasks.
+     * @throws NexusException If there is an issue with adding the task or saving to storage.
+     */
     @Override
     public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         try {

@@ -16,7 +16,6 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndex_taskRemoved() throws NexusException {
-        // Setup dependencies
         ArrayList<nexus.tasks.Task> tasks = new ArrayList<>();
         tasks.add(new Todo("First Task", false ));
         TaskList taskList = new TaskList(tasks);
@@ -40,6 +39,6 @@ public class DeleteCommandTest {
 
         assertThrows(NexusException.class, () -> {
             command.run(taskList, ui, storage);
-        }, "Should throw NexusException due to invalid index via validateIndex()");
+        }, "NexusException should be thrown due to invalid index via validateIndex()");
     }
 }
