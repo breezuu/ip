@@ -12,7 +12,16 @@ import nexus.commands.MarkCommand;
 import nexus.commands.UnmarkCommand;
 import nexus.exception.NexusException;
 
+/**
+ * Parser class responsible for parsing user input commands.
+ */
 public class Parser {
+    /**
+     * Parses the user input command and returns the corresponding Command object.
+     * @param fullCommand User input command string.
+     * @return Command object representing the parsed command.
+     * @throws NexusException If the command is invalid or cannot be parsed.
+     */
     public static Command parse(String fullCommand) throws NexusException {
         String[] split = fullCommand.trim().split(" ", 2);
         String keyword = split[0].toLowerCase();
@@ -42,6 +51,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the task index from the user input.
+     * @param split Array of command arguments.
+     * @return Parsed task index as an integer.
+     * @throws NexusException If the index is invalid or cannot be parsed.
+     */
     public static int parseIndex(String[] split) throws NexusException {
         if (split.length < 2 || split[1].isBlank()) {
             System.out.println("    [NEXUS]: Please specify the task number you wish to mark or delete.");
@@ -55,6 +70,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses the date from the user input.
+     * @param date Date string provided by the user.
+     * @return Parsed date string.
+     * @throws NexusException If the date is invalid or cannot be parsed.
+     */
     public static String parseDate(String date) throws NexusException {
         if (date.length() < 2 || date.isBlank()) {
             System.out.println("    [NEXUS]: Please specify the date you wish to check.");
@@ -64,6 +85,12 @@ public class Parser {
         return date;
     }
 
+    /**
+     * Parses the user input for a Todo command and returns the corresponding Command object.
+     * @param info User input string for the Todo command.
+     * @return Command object representing the parsed Todo command.
+     * @throws NexusException If the Todo command is invalid or cannot be parsed.
+     */
     private static Command prepareTodo(String info) throws NexusException {
         if (info.isBlank()) {
             System.out.println("    // ERROR: INVALID TO-DO TASK");
@@ -73,6 +100,12 @@ public class Parser {
         return new AddTodoCommand(info);
     }
 
+    /**
+     * Parses the user input for a Deadline command and returns the corresponding Command object.
+     * @param info User input string for the Deadline command.
+     * @return Command object representing the parsed Deadline command.
+     * @throws NexusException If the Deadline command is invalid or cannot be parsed.
+     */
     private static Command prepareDeadline(String info) throws NexusException {
         if (!info.contains(" /by ")) {
             System.out.println("    // ERROR: INVALID DEADLINE TASK");
@@ -92,6 +125,12 @@ public class Parser {
         return new AddDeadlineCommand(description, deadline, false);
     }
 
+    /**
+     * Parses the user input for an Event command and returns the corresponding Command object.
+     * @param info User input string for the Event command.
+     * @return Command object representing the parsed Event command.
+     * @throws NexusException If the Event command is invalid or cannot be parsed.
+     */
     private static Command prepareEvent(String info) throws NexusException {
         if (!info.contains(" /from ") || !info.contains(" /to ")) {
             System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");

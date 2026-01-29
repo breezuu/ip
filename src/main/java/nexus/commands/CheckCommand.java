@@ -10,13 +10,27 @@ import nexus.tasks.Task;
 import nexus.tasks.TaskList;
 import nexus.ui.Ui;
 
+/**
+ * Command to check for tasks occurring on a specific date.
+ */
 public class CheckCommand extends Command {
     private final String dateToCheck;
 
+    /**
+     * Constructor for CheckCommand.
+     * @param date Date used to check for tasks in the format (d/M/yyyy).
+     */
     public CheckCommand(String date) {
         this.dateToCheck = date;
     }
 
+    /**
+     * Executes CheckCommand to find tasks occurring on a specific date.
+     * @param tasks TaskList to search for tasks.
+     * @param ui Ui to display the result of the command.
+     * @param storage Storage to save the task list (not used in this command).
+     * @throws NexusException If there is an error during execution.
+     */
     @Override
     public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         ArrayList<Task> taskList = tasks.getTasks();

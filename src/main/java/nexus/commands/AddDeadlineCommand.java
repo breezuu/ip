@@ -8,6 +8,9 @@ import nexus.tasks.Deadline;
 import nexus.tasks.TaskList;
 import nexus.ui.Ui;
 
+/**
+ * Command to add a deadline task to the task list.
+ */
 public class AddDeadlineCommand extends Command {
     private final String description;
     private final String deadline;
@@ -16,7 +19,7 @@ public class AddDeadlineCommand extends Command {
     /**
      * Constructor for AddDeadlineCommand.
      * @param desc Description of the deadline task.
-     * @param deadline Deadline of the task in the format "dd/MM/yyyy HH:mm".
+     * @param deadline Deadline of the task in the format (d/M/yyyy h:mm a).
      * @param isDone Whether the task is done initially.
      */
     public AddDeadlineCommand(String desc, String deadline, boolean isDone) {

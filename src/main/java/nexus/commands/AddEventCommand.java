@@ -8,6 +8,9 @@ import nexus.tasks.Event;
 import nexus.tasks.TaskList;
 import nexus.ui.Ui;
 
+/**
+ * Command to add an event task to the task list.
+ */
 public class AddEventCommand extends Command {
     private final String description;
     private final String startTime;
@@ -17,8 +20,8 @@ public class AddEventCommand extends Command {
     /**
      * Constructor for AddEventCommand.
      * @param desc Description of the event task.
-     * @param startTime Start time of the event in the format "dd/MM/yyyy HH:mm".
-     * @param endTime End time of the event in the format "dd/MM/yyyy HH:mm".
+     * @param startTime Start time of the event in the format (d/M/yyyy h:mm a).
+     * @param endTime End time of the event in the format (d/M/yyyy h:mm a).
      * @param isDone Whether the task is done initially.
      */
     public AddEventCommand(String desc, String startTime, String endTime, boolean isDone) {
