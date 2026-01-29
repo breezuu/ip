@@ -18,6 +18,8 @@ import nexus.tasks.Todo;
  * Storage class responsible for loading and saving tasks to a file.
  */
 public class Storage {
+    private final String filePath;
+
     /**
      * Constructs a Storage object with the specified file path.
      * @param filePath Path to the file for storing tasks.
