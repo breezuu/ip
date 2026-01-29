@@ -1,8 +1,13 @@
+package nexus.ui;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class Ui {
+import nexus.tasks.Task;
+import nexus.tasks.TaskList;
+
+public class Ui {
     private static final int WIDTH = 60;
     private static final String BORDER = "  " + "-".repeat(WIDTH);
     private final Scanner sc;
@@ -84,7 +89,7 @@ class Ui {
         System.out.println("    // CURRENT_TOTAL: " + tasks.getSize() + numTasks);
     }
 
-    public void printTaskUpdated(Task updatedTask, ArrayList<Task> tasks, int index) {
+    public void printTaskUpdated(ArrayList<Task> tasks, int index) {
         System.out.println("    [NEXUS]: Databank updated successfully.");
         System.out.printf("    TASK@ADDR_%d. %s", index, tasks.get(index - 1).toString());
         System.out.println();

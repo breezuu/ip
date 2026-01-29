@@ -1,8 +1,10 @@
+package nexus.tasks;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-class Deadline extends Task {
+public class Deadline extends Task {
     private final LocalDateTime deadlineTime;
     private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("d/M/yyyy h:mm a", Locale.ENGLISH);
     private final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("MMM dd yyyy h:mm a", Locale.ENGLISH);
