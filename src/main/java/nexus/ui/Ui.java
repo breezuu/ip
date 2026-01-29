@@ -7,19 +7,32 @@ import java.util.Scanner;
 import nexus.tasks.Task;
 import nexus.tasks.TaskList;
 
+/**
+ * User interface for the Nexus chatbot.
+ */
 public class Ui {
     private static final int WIDTH = 60;
     private static final String BORDER = "  " + "-".repeat(WIDTH);
     private final Scanner sc;
 
+    /**
+     * Constructor for the Ui class.
+     */
     public Ui() {
         this.sc = new Scanner(System.in);
     }
 
+    /**
+     * Reads a command from the user input.
+     * @return The user's command as a trimmed string.
+     */
     public String readCommand() {
         return this.sc.nextLine().trim();
     }
 
+    /**
+     * Prints a greeting message to the user.
+     */
     public void printGreeting() {
         String logo = """
               _   _
@@ -38,10 +51,17 @@ public class Ui {
         printLine();
     }
 
+    /**
+     * Prints a farewell message to the user.
+     */
     public void printFarewell() {
         System.out.println("    [NEXUS]: Request acknowledged. Nexus is now going offline.");
     }
 
+    /**
+     * Prints the list of tasks to the user.
+     * @param tasks The list of tasks to be displayed.
+     */
     public void printTaskList(List<Task> tasks) {
         System.out.println("    [NEXUS]: Accessing databank...");
         if (!tasks.isEmpty()) {
@@ -56,6 +76,11 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints a confirmation message after adding a task to the list.
+     * @param task The task that was added.
+     * @param tasks The list of tasks to which the task was added.
+     */
     public void printTaskAdded(Task task, TaskList tasks) {
         int addr = tasks.getTasks().indexOf(task) + 1;
 
@@ -82,6 +107,11 @@ public class Ui {
         System.out.println("    // CURRENT_TOTAL: " + tasks.getSize() + numTasks);
     }
 
+    /**
+     * Prints a confirmation message after deleting a task from the list.
+     * @param removedTask The task that was deleted.
+     * @param tasks The list of tasks from which the task was deleted.
+     */
     public void printTaskDeleted(Task removedTask, TaskList tasks) {
         System.out.println("    [NEXUS]: Databank entry purged.");
         System.out.println("    >>>> " + removedTask.toString());
@@ -89,20 +119,35 @@ public class Ui {
         System.out.println("    // CURRENT_TOTAL: " + tasks.getSize() + numTasks);
     }
 
+    /**
+     * Prints a confirmation message after updating a task in the list.
+     * @param tasks The list of tasks to which the task was updated.
+     * @param index The index of the task that was updated.
+     */
     public void printTaskUpdated(ArrayList<Task> tasks, int index) {
         System.out.println("    [NEXUS]: Databank updated successfully.");
         System.out.printf("    TASK@ADDR_%d. %s", index, tasks.get(index - 1).toString());
         System.out.println();
     }
 
+    /**
+     * Prints a line separator for formatting output.
+     */
     public void printLine() {
         System.out.println(BORDER);
     }
 
+    /**
+     * Prints an error message to the user.
+     * @param errorMsg The error message to be displayed.
+     */
     public void printError(String errorMsg) {
         System.out.println("    " + errorMsg);
     }
 
+    /**
+     * Simulates the boot process of Nexus, displaying initialization and loading steps.
+     */
     public void simulateBoot() {
         int maxWidth = 40;
         String[] bootSteps = {"// INITIALIZING NEXUS ", "// LOADING PRECEPTS "};
