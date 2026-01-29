@@ -14,13 +14,23 @@ import nexus.tasks.Event;
 import nexus.tasks.Task;
 import nexus.tasks.Todo;
 
+/**
+ * Storage class responsible for loading and saving tasks to a file.
+ */
 public class Storage {
-    private final String filePath;
-
+    /**
+     * Constructs a Storage object with the specified file path.
+     * @param filePath Path to the file for storing tasks.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the file and returns them as an ArrayList.
+     * @return ArrayList of loaded tasks.
+     * @throws NexusException If there is an error loading tasks from the file.
+     */
     public ArrayList<Task> loadTasks() throws NexusException {
         ArrayList<Task> loadedTasks = new ArrayList<>();
 
@@ -51,6 +61,12 @@ public class Storage {
         return loadedTasks;
     }
 
+    /**
+     * Parses a task string and returns a Task object.
+     * @param s Task string to be parsed.
+     * @return Task object representing the parsed task.
+     * @throws NexusException If the task string is invalid or cannot be parsed.
+     */
     public Task parseTasks(String s) throws NexusException {
         String[] components = s.split("\\s*\\|\\s*"); // Splits the task based on '|'
         if (components.length < 3) {
@@ -79,6 +95,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the tasks to the file.
+     * @param tasks List of tasks to be saved.
+     */
     public void saveTasks(List<Task> tasks) {
         try {
             FileWriter fw = new FileWriter("./data/databank.txt");
@@ -91,6 +111,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Checks if the data directory exists and creates it if it does not exist.
+     * @throws IOException If there is an error creating the directory.
+     */
     public void checkDirectory() throws IOException {
         Path path = Paths.get("data");
         if (Files.notExists(path)) {
