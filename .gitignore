@@ -22,11 +22,7 @@ src/main/resources/docs/
 *.iml
 bin/
 
-<<<<<<< HEAD
 # Nexus local databank file
-=======
-# Nexus local databank
->>>>>>> branch-Level-8
 /data/
 
 /text-ui-test/ACTUAL*.TXT
