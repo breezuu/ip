@@ -41,3 +41,16 @@ test {
         showStandardStreams = false
     }
 }
+
+application {
+    mainClass.set("seedu.duke.Duke")
+}
+
+shadowJar {
+    archiveBaseName = "duke"
+    archiveClassifier = null
+}
+
+run {
+    standardInput = System.in
+}
