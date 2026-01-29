@@ -7,6 +7,7 @@ import nexus.commands.CheckCommand;
 import nexus.commands.Command;
 import nexus.commands.DeleteCommand;
 import nexus.commands.ExitCommand;
+import nexus.commands.FindCommand;
 import nexus.commands.ListCommand;
 import nexus.commands.MarkCommand;
 import nexus.commands.UnmarkCommand;
@@ -46,6 +47,8 @@ public class Parser {
             return new DeleteCommand(parseIndex(split));
         case "check":
             return new CheckCommand(parseDate(args));
+        case "find":
+            return new FindCommand(args);
         default:
             throw new NexusException("INVALID COMMAND. PLEASE TRY AGAIN.");
         }
