@@ -1,12 +1,13 @@
 package nexus.tasks;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.format.DateTimeParseException;
 
 import org.junit.jupiter.api.Test;
-import java.time.format.DateTimeParseException;
 
 public class EventTest {
 
@@ -27,7 +28,7 @@ public class EventTest {
     @Test
     public void isDuringDate_mismatchesStartDate_returnsFalse() {
         Event event = new Event("Hackathon", "15/3/2026 10:00 AM", "16/3/2026 4:00 PM", false);
-        // Result should be false regardless of the end date (since matching logic is tied to startTime)
+        // The result should be false regardless of the end date (since matching logic is tied to startTime)
         assertFalse(event.isDuringDate("16/3/2026"));
     }
 

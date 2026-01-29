@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'checkstyle'
 }
 
 group = 'com.nexus'
@@ -22,6 +23,10 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+checkstyle {
+    toolVersion = '11.1.0'
 }
 
 test {
