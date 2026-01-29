@@ -4,11 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import nexus.tasks.TaskList;
-import nexus.tasks.Deadline;
-import nexus.ui.Ui;
-import nexus.storage.Storage;
+
 import nexus.exception.NexusException;
+import nexus.storage.Storage;
+import nexus.tasks.Deadline;
+import nexus.tasks.TaskList;
+import nexus.ui.Ui;
 
 public class AddDeadlineCommandTest {
 

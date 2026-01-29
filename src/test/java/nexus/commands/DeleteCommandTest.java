@@ -1,23 +1,24 @@
 package nexus.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
+
+import nexus.exception.NexusException;
+import nexus.storage.Storage;
 import nexus.tasks.TaskList;
 import nexus.tasks.Todo;
 import nexus.ui.Ui;
-import nexus.storage.Storage;
-import nexus.exception.NexusException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DeleteCommandTest {
 
     @Test
     public void execute_validIndex_taskRemoved() throws NexusException {
         ArrayList<nexus.tasks.Task> tasks = new ArrayList<>();
-        tasks.add(new Todo("First Task", false ));
+        tasks.add(new Todo("First Task", false));
         TaskList taskList = new TaskList(tasks);
         Ui ui = new Ui();
 
