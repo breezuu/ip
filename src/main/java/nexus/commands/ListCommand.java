@@ -11,13 +11,24 @@ import nexus.ui.Ui;
 public class ListCommand extends Command {
     /**
      * Executes ListCommand to display all tasks in the task list.
-     * @param tasks TaskList which is used to get all tasks.
+     * @param tasks A TaskList which is used to get all tasks.
      * @param ui Ui to display the list of tasks.
      * @param storage Storage (not used in this command).
+     * @return A formatted string response from the user interface.
      * @throws NexusException If there is an error during command execution.
      */
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
-        ui.printTaskList(tasks.getTasks());
+    public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+        String response = ui.printTaskListGui(tasks.getTasks());
+        return response;
+    }
+
+    /**
+     * Returns the name of the command.
+     * @return Name of the command.
+     */
+    @Override
+    public String getName() {
+        return "ListCommand";
     }
 }

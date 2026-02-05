@@ -18,13 +18,23 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            stage.setMinHeight(220);
-            stage.setMinWidth(417);
+            // Set the initial and minimum dimensions
+            stage.setWidth(600.0);
+            stage.setHeight(700.0);
+
+            stage.setMinWidth(500.0);
+            stage.setMinHeight(600.0);
+
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setNexus(nexus); // Inject the Nexus instance
+
+            // Set title
+            stage.setTitle("NEXUS Terminal");
+
+            // Inject the Nexus instance
+            fxmlLoader.<MainWindow>getController().setNexus(nexus);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

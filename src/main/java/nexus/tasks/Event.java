@@ -32,7 +32,7 @@ public class Event extends Task {
      * @return True if the event falls on the specified date, false otherwise.
      */
     @Override
-    public boolean isDuringDate(String date) {
+    public boolean isValidDateWindow(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         return this.startTime.format(formatter).equals(date);
     }

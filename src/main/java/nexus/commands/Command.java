@@ -13,10 +13,16 @@ public abstract class Command {
      * Executes the command with the given task list, user interface, and storage.
      * @param tasks TaskList to operate on.
      * @param ui Ui for user interaction.
-     * @param databank Storage for task data persistence.
+     * @param storage Storage for task data persistence.
      * @throws NexusException If there is an error during command execution.
      */
-    public abstract void run(TaskList tasks, Ui ui, Storage databank) throws NexusException;
+    public abstract String run(TaskList tasks, Ui ui, Storage storage) throws NexusException;
+
+    /**
+     * Returns the name of the command.
+     * @return The name of the command.
+     */
+    public abstract String getName();
 
     /**
      * Checks if the command is an exit command.

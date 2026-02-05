@@ -27,16 +27,30 @@ public class FindCommand extends Command {
      * @param tasks TaskList used to search for tasks.
      * @param ui Ui to display the found tasks.
      * @param storage Storage (not used in this command).
+     * @return A formatted string response from the user interface.
      * @throws NexusException If there is an error during command execution.
      */
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+    public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+        StringBuilder sb = new StringBuilder();
         try {
             List<Task> res = tasks.getTasks().stream().filter(t -> t.getDescription().contains(keyword)).toList();
-            ui.printTaskList(res);
+            sb.append(ui.printTaskListGui(res));
         } catch (NullPointerException e) {
-            System.out.println("    [NEXUS]: The keyword cannot be null or empty.");
-            System.out.println("    // e.g. 'find quiz'");
+            StringBuilder sb2 = new StringBuilder();
+            sb2.append("[NEXUS]: The keyword cannot be null or empty.\n");
+            sb2.append("// e.g. 'find quiz'");
+            return sb2.toString();
         }
+        return sb.toString();
+    }
+
+    /**
+     * Returns the name of the command.
+     * @return Name of the command.
+     */
+    @Override
+    public String getName() {
+        return "FindCommand";
     }
 }

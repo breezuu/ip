@@ -36,18 +36,33 @@ public class AddEventCommand extends Command {
      * @param tasks The task list to which the event task will be added.
      * @param ui The user interface for displaying messages.
      * @param storage The storage for saving tasks.
+     * @return A formatted string response from the user interface.
      * @throws NexusException If there is an issue with adding the task or saving to storage.
      */
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+    public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+        StringBuilder sb = new StringBuilder();
+
         try {
             Event eventTask = new Event(this.description, this.startTime, this.endTime, this.isDone);
             tasks.addTask(eventTask);
-            ui.printTaskAdded(eventTask, tasks);
+            sb.append(ui.printAddedTask(eventTask, tasks));
             storage.saveTasks(tasks.getTasks());
         } catch (DateTimeParseException e) {
-            System.out.println("    [NEXUS]: Did you follow the date and time format (12-hour)?");
-            System.out.println("    // e.g. 'event race /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM'");
+            StringBuilder sb2 = new StringBuilder();
+            sb2.append("[NEXUS]: Did you follow the date and time format (12-hour)?\n");
+            sb2.append("// e.g. 'event race /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM'");
+            return sb2.toString();
         }
+        return sb.toString();
+    }
+
+    /**
+     * Returns the name of the command.
+     * @return Name of the command.
+     */
+    @Override
+    public String getName() {
+        return "AddCommand";
     }
 }

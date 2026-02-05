@@ -26,13 +26,25 @@ public class AddTodoCommand extends Command {
      * @param tasks TaskList to which the Todo task will be added.
      * @param ui Ui to display the result of the command.
      * @param storage Storage to save the updated task list.
+     * @return A formatted string response from the user interface.
      * @throws NexusException If there is an error during execution.
      */
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+    public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+        StringBuilder sb = new StringBuilder();
         Task todoTask = new Todo(this.description, false);
         tasks.addTask(todoTask);
-        ui.printTaskAdded(todoTask, tasks);
+        sb.append(ui.printAddedTask(todoTask, tasks));
         storage.saveTasks(tasks.getTasks());
+        return sb.toString();
+    }
+
+    /**
+     * Returns the name of the command.
+     * @return Name of the command.
+     */
+    @Override
+    public String getName() {
+        return "AddCommand";
     }
 }
