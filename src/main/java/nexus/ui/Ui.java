@@ -114,10 +114,10 @@ public class Ui {
      * @return A formatted string representation of the task addition confirmation.
      */
     public String printAddedTask(Task task, TaskList taskList) {
+        StringBuilder sb = new StringBuilder();
         int addr = taskList.getTasks().indexOf(task) + 1;
 
-        System.out.println("// TASK STORED @ ADDR_" + addr + ":\n" + "    >>>> " + task.toString());
-        System.out.println();
+        sb.append("// TASK STORED @ ADDR_%d\n>>>> %s\n".formatted(addr, task.toString()));
         String taskType = "";
 
         switch (task.getType()) {
@@ -133,11 +133,11 @@ public class Ui {
         default:
             // Do nothing
         }
-
-        // System.out.println("    [NEXUS]: Your " + taskType + " task " + "has been added into the databank.");
         String numTasks = taskList.getSize() > 1 ? " TASKS" : " TASK";
-        System.out.println("// CURRENT_TOTAL: " + taskList.getSize() + numTasks);
-        return "[NEXUS]: Your " + taskType + " task" + " has been added into the databank.";
+        sb.append("// CURRENT_TOTAL: %d%s\n".formatted(taskList.getSize(), numTasks));
+        sb.append("[NEXUS]: Your %s task has been added into the databank.".formatted(taskType));
+
+        return sb.toString();
     }
 
     /**
@@ -149,11 +149,12 @@ public class Ui {
     public String printDeletedTask(Task removedTask, TaskList taskList) {
         StringBuilder sb = new StringBuilder("[NEXUS]: Databank entry purged.\n");
         // System.out.println("    [NEXUS]: Databank entry purged.");
-        sb.append(">>>> %s".formatted(removedTask.toString()));
+        sb.append(">>>> %s\n".formatted(removedTask.toString()));
         // System.out.println("    >>>> " + removedTask.toString());
         String numTasks = taskList.getSize() == 1 ? " TASK" : " TASKS";
         // System.out.println("    // CURRENT_TOTAL: " + tasks.getSize() + numTasks);
         sb.append("// CURRENT_TOTAL: ").append(taskList.getSize()).append(numTasks).append("\n");
+
         return sb.toString();
     }
 
