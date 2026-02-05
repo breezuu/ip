@@ -26,15 +26,23 @@ public class MainWindow extends AnchorPane {
 
     private Nexus nexus;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image nexusImage = new Image(this.getClass().getResourceAsStream("/images/nexus-chatbot.jpg"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/student-user.png"));
+    private Image nexusImage = new Image(this.getClass().getResourceAsStream("/images/nexus-chatbot.png"));
 
+    /**
+     * Initializes the main window components and bindings.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+
+        scrollPane.setFitToWidth(true);
     }
 
-    /** Injects the Nexus instance */
+    /**
+     * Injects the Nexus instance.
+     * @param n Nexus instance.
+     */
     public void setNexus(Nexus n) {
         nexus = n;
         String firstGreeting = "// INITIALIZING NEXUS... [OK] \n// LOADING DATABANK... [OK]";
@@ -71,15 +79,11 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         if (input.equalsIgnoreCase("bye")) {
-            PauseTransition delay = new PauseTransition(Duration.seconds(4));
+            PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
 
             delay.setOnFinished(event -> Platform.exit());
 
             delay.play();
-        }
-
-        if (input.equalsIgnoreCase("bye")) {
-            javafx.application.Platform.exit();
         }
     }
 }

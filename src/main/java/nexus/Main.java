@@ -31,7 +31,7 @@ public class Main extends Application {
             stage.setScene(scene);
 
             // Set title
-            stage.setTitle("NEXUS Terminal");
+            stage.setTitle("Nexus");
 
             // Inject the Nexus instance
             fxmlLoader.<MainWindow>getController().setNexus(nexus);

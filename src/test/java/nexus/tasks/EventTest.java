@@ -20,13 +20,13 @@ public class EventTest {
     }
 
     @Test
-    public void isValidDate_matchesStartDate_Window_returnsTrue() {
+    public void isValidDate_matchesStartDateWindow_returnsTrue() {
         Event event = new Event("Meeting", "15/3/2026 10:00 AM", "15/3/2026 4:00 PM", false);
         assertTrue(event.isValidDateWindow("15/3/2026"));
     }
 
     @Test
-    public void isValidDate_mismatchesStartDate_Window_returnsFalse() {
+    public void isValidDate_mismatchesStartDateWindow_returnsFalse() {
         Event event = new Event("Hackathon", "15/3/2026 10:00 AM", "16/3/2026 4:00 PM", false);
         // The result should be false regardless of the end date (since matching logic is tied to startTime)
         assertFalse(event.isValidDateWindow("16/3/2026"));

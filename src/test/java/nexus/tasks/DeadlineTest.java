@@ -16,13 +16,13 @@ public class DeadlineTest {
     }
 
     @Test
-    public void isValidDate_matchingDate_Window_returnsTrue() {
+    public void isValidDate_matchingDateWindow_returnsTrue() {
         Deadline deadline = new Deadline("Quiz", "15/3/2024 11:59 PM", false);
         assertTrue(deadline.isValidDateWindow("15/3/2024"));
     }
 
     @Test
-    public void isValidDate_wrongDate_Window_returnsFalse() {
+    public void isValidDate_wrongDateWindow_returnsFalse() {
         Deadline deadline = new Deadline("Quiz", "15/3/2024 11:59 PM", false);
         assertFalse(deadline.isValidDateWindow("16/3/2024"));
     }
