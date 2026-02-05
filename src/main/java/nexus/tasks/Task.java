@@ -77,7 +77,7 @@ public class Task {
      * @param date Date to check against.
      * @return True if the task is during the specified date, false otherwise.
      */
-    public boolean isDuringDate(String date) {
+    public boolean isValidDateWindow(String date) {
         return false; // Tasks have no deadline/date by default
     }
 

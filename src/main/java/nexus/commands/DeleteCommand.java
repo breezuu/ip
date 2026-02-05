@@ -22,17 +22,28 @@ public class DeleteCommand extends Command {
 
     /**
      * Executes DeleteCommand to remove a task from the task list.
-     * @param tasks TaskList from which the task will be deleted.
+     * @param tasks A TaskList from which the task will be deleted.
      * @param ui Ui to display the result of the command.
      * @param storage Storage to save the updated task list.
+     * @return A formatted string response from the user interface.
      * @throws NexusException If there is an error during command execution.
      */
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+    public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         tasks.validateIndex(index);
 
         Task removedTask = tasks.deleteTask(index - 1);
-        ui.printTaskDeleted(removedTask, tasks);
+        String response = ui.printDeletedTask(removedTask, tasks);
         storage.saveTasks(tasks.getTasks());
+        return response;
+    }
+
+    /**
+     * Returns the name of the command.
+     * @return Name of the command.
+     */
+    @Override
+    public String getName() {
+        return "DeleteCommand";
     }
 }

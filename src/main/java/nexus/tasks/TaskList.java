@@ -68,18 +68,22 @@ public class TaskList {
     }
 
     /**
-     * Validates if the provided index is within the bounds of the task list.
+     * Checks if the provided index is within the bounds of the task list.
      * @param index The index to be validated.
      * @throws NexusException If the index is out of bounds or the task list is empty.
      */
     public void validateIndex(int index) throws NexusException {
+        StringBuilder sb = new StringBuilder();
+
         if (this.tasks.isEmpty()) {
-            throw new NexusException("// ERROR: DATABANK EMPTY");
+            sb.append("// ERROR: DATABANK EMPTY");
+            throw new NexusException(sb.toString());
 
         } else if (index < 1 || index > this.tasks.size()) {
-            System.out.println("    // ERROR: TASK NUMBER OUT OF BOUNDS");
-            String numTasks = this.tasks.size() > 1 ? " TASKS" : " TASK";
-            throw new NexusException("// CURRENT_TOTAL: " + this.tasks.size() + numTasks);
+            sb.append("// ERROR: TASK NUMBER OUT OF BOUNDS\n");
+            String numTasks = this.tasks.size() > 1 ? "TASKS" : "TASK";
+            sb.append("// CURRENT_TOTAL: %d %s".formatted(this.tasks.size(), numTasks));
+            throw new NexusException(sb.toString());
         }
     }
 }

@@ -29,12 +29,12 @@ public class UiTest {
     }
 
     @Test
-    public void printTaskAdded_todoTask_correctOutputFormatting() {
+    public void printTaskAdded_todo_correctOutputFormattingTask() {
         TaskList tasks = new TaskList();
         Todo todo = new Todo("Read Book", false);
         tasks.addTask(todo);
 
-        ui.printTaskAdded(todo, tasks);
+        ui.printAddedTask(todo, tasks);
 
         String output = outContent.toString();
 

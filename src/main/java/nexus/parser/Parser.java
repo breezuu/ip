@@ -62,8 +62,11 @@ public class Parser {
      */
     public static int parseIndex(String[] split) throws NexusException {
         if (split.length < 2 || split[1].isBlank()) {
-            System.out.println("    [NEXUS]: Please specify the task number you wish to mark or delete.");
-            throw new NexusException("// EXAMPLE: mark 6, delete 7");
+            StringBuilder sb = new StringBuilder();
+            sb.append("[NEXUS]: Please specify the task number you wish to mark or delete.\n");
+            // System.out.println("    [NEXUS]: Please specify the task number you wish to mark or delete.");
+            sb.append("// EXAMPLE: mark 6, delete 7");
+            throw new NexusException(sb.toString());
         }
 
         try {
@@ -81,8 +84,11 @@ public class Parser {
      */
     public static String parseDate(String date) throws NexusException {
         if (date.length() < 2 || date.isBlank()) {
-            System.out.println("    [NEXUS]: Please specify the date you wish to check.");
-            throw new NexusException("// EXAMPLE: check 1/1/2002");
+            StringBuilder sb = new StringBuilder();
+            sb.append("[NEXUS]: Please specify the date you wish to check.\n");
+            sb.append("// EXAMPLE: check 1/1/2002");
+            // System.out.println("    [NEXUS]: Please specify the date you wish to check.");
+            throw new NexusException(sb.toString());
         }
 
         return date;
@@ -96,9 +102,13 @@ public class Parser {
      */
     private static Command prepareTodo(String info) throws NexusException {
         if (info.isBlank()) {
-            System.out.println("    // ERROR: INVALID TO-DO TASK");
-            System.out.println("    [NEXUS]: Did you forget to specify the 'To-Do' description?");
-            throw new NexusException("// EXAMPLE: todo tidy up room");
+            StringBuilder sb = new StringBuilder();
+            sb.append("// ERROR: INVALID TO-DO TASK\n");
+            sb.append("[NEXUS]: Did you forget to specify the 'To-Do' description?\n");
+            sb.append("// EXAMPLE: todo tidy up room");
+            // System.out.println("    // ERROR: INVALID TO-DO TASK");
+            // System.out.println("    [NEXUS]: Did you forget to specify the 'To-Do' description?");
+            throw new NexusException(sb.toString());
         }
         return new AddTodoCommand(info);
     }
@@ -111,9 +121,13 @@ public class Parser {
      */
     private static Command prepareDeadline(String info) throws NexusException {
         if (!info.contains(" /by ")) {
-            System.out.println("    // ERROR: INVALID DEADLINE TASK");
-            System.out.println("    [NEXUS]: Did you miss out on the '/by' specifier?");
-            throw new NexusException("// EXAMPLE: 'deadline quiz /by 01/01/2002 12:00 PM'");
+            StringBuilder sb = new StringBuilder();
+            sb.append("// ERROR: INVALID DEADLINE TASK\n");
+            sb.append("[NEXUS]: Did you miss out on the '/by' specifier?\n");
+            sb.append("// EXAMPLE: deadline quiz /by 01/01/2002 12:00 PM");
+            // System.out.println("    // ERROR: INVALID DEADLINE TASK");
+            // System.out.println("    [NEXUS]: Did you miss out on the '/by' specifier?");
+            throw new NexusException(sb.toString());
         }
 
         String[] split = info.split(" /by ");
@@ -136,8 +150,11 @@ public class Parser {
      */
     private static Command prepareEvent(String info) throws NexusException {
         if (!info.contains(" /from ") || !info.contains(" /to ")) {
-            System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
-            throw new NexusException("// EXAMPLE: event tuition /from <startTime> /to <endTime>");
+            StringBuilder sb = new StringBuilder();
+            sb.append("[NEXUS]: Events require BOTH '/from' and '/to' timings.\n");
+            sb.append("// EXAMPLE: event tuition /from <startTime> /to <endTime>");
+            // System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
+            throw new NexusException(sb.toString());
         }
 
         String[] split = info.split(" /from ", 2);

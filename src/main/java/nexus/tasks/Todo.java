@@ -38,7 +38,7 @@ public class Todo extends Task {
      * @return False, as Todo tasks have no deadline/date.
      */
     @Override
-    public boolean isDuringDate(String date) {
+    public boolean isValidDateWindow(String date) {
         return false; // To-do tasks have no deadline/date
     }
 

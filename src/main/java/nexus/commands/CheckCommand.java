@@ -29,23 +29,38 @@ public class CheckCommand extends Command {
      * @param tasks TaskList to search for tasks.
      * @param ui Ui to display the result of the command.
      * @param storage Storage to save the task list (not used in this command).
+     * @return A formatted string response from the user interface.
      * @throws NexusException If there is an error during execution.
      */
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+    public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         ArrayList<Task> taskList = tasks.getTasks();
         List<Task> result;
+        StringBuilder sb = new StringBuilder();
 
-        System.out.println("    [NEXUS]: Checking for existing deadlines/events with the specified date...");
+        sb.append("[NEXUS]: Checking for existing deadlines/events with the specified date...\n");
 
         try {
             result = taskList.stream()
-                    .filter(t -> t.isDuringDate(this.dateToCheck))
+                    .filter(t -> t.isValidDateWindow(this.dateToCheck))
                     .toList();
-            ui.printTaskList(result);
+            sb.append(ui.printTaskListGui(result));
         } catch (DateTimeParseException e) {
-            System.out.println("    [NEXUS]: Did you follow the date format (DD/MM/YYYY)?");
-            System.out.println("    // e.g. 'check 01/01/2002'");
+            StringBuilder sb2 = new StringBuilder();
+            sb2.append("[NEXUS]: Did you follow the date format (DD/MM/YYYY)?\n");
+            sb2.append("// e.g. 'check 01/01/2002'");
+            return sb2.toString();
         }
+
+        return sb.toString();
+    }
+
+    /**
+     * Returns the name of the command.
+     * @return Name of the command.
+     */
+    @Override
+    public String getName() {
+        return "CheckCommand";
     }
 }

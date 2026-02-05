@@ -27,10 +27,11 @@ public class MarkCommand extends Command {
      * @param tasks TaskList used to find the task to be marked as done.
      * @param ui Ui to display the result of the command.
      * @param storage Storage to save the updated task list.
+     * @return A formatted string response from the user interface.
      * @throws NexusException If there is an error during command execution.
      */
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+    public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         tasks.validateIndex(index);
 
         ArrayList<Task> taskList = tasks.getTasks();
@@ -39,6 +40,16 @@ public class MarkCommand extends Command {
 
         storage.saveTasks(taskList);
 
-        ui.printTaskUpdated(taskList, index);
+        String response = ui.printUpdatedTask(taskList, index);
+        return response;
+    }
+
+    /**
+     * Returns the name of the command.
+     * @return Name of the command.
+     */
+    @Override
+    public String getName() {
+        return "ChangeMarkCommand";
     }
 }

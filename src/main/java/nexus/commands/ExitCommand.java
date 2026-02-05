@@ -18,12 +18,14 @@ public class ExitCommand extends Command {
      * @param tasks TaskList (not used in this command).
      * @param ui Ui to display the farewell message.
      * @param storage Storage to save the task list before exiting.
+     * @return A formatted string response from the user interface.
      * @throws NexusException If there is an error during command execution.
      */
     @Override
-    public void run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+    public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         storage.saveTasks(tasks.getTasks());
-        ui.printFarewell();
+        String response = ui.printFarewell();
+        return response;
     }
 
     /**
@@ -33,5 +35,14 @@ public class ExitCommand extends Command {
     @Override
     public boolean isExit() {
         return true;
+    }
+
+    /**
+     * Returns the name of the command.
+     * @return Name of the command.
+     */
+    @Override
+    public String getName() {
+        return "ExitCommand";
     }
 }
