@@ -50,6 +50,7 @@ public class Parser {
         case "find":
             return new FindCommand(args);
         default:
+            assert false : "Unknown command type";
             throw new NexusException("INVALID COMMAND. PLEASE TRY AGAIN.");
         }
     }
@@ -131,6 +132,9 @@ public class Parser {
         }
 
         String[] split = info.split(" /by ");
+
+        assert split.length >= 2 : "The split array should have at least 2 parts";
+
         String description = split[0].trim();
 
         if (description.isEmpty()) {
@@ -158,6 +162,8 @@ public class Parser {
         }
 
         String[] split = info.split(" /from ", 2);
+        assert split.length == 2 : "The split array should have exactly 2 parts";
+
         String eventDesc = split[0].trim();
 
         if (eventDesc.isEmpty()) {
@@ -165,6 +171,8 @@ public class Parser {
         }
 
         String[] eventTimeSplit = split[1].split(" /to ", 2);
+        assert eventTimeSplit.length == 2 : "The eventTimeSplit array should have exactly 2 parts";
+
         String startTime = eventTimeSplit[0].trim();
         String endTime = eventTimeSplit[1].trim();
 

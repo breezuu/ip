@@ -41,8 +41,13 @@ public class AddDeadlineCommand extends Command {
         StringBuilder sb = new StringBuilder();
 
         try {
+            int prevTaskCount = tasks.getSize();
+
             Deadline deadlineTask = new Deadline(this.description, this.deadline, this.isDone);
             tasks.addTask(deadlineTask);
+
+            assert tasks.getSize() == prevTaskCount + 1 : "Size of TaskList object should increase by 1";
+
             sb.append(ui.printAddedTask(deadlineTask, tasks));
             storage.saveTasks(tasks.getTasks());
 

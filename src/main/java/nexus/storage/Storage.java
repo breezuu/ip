@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,13 +48,17 @@ public class Storage {
 
             List<String> lines = Files.readAllLines(filePath);
 
+            int lineNumber = 1;
+
             for (String s : lines) {
                 try {
                     Task task = parseTasks(s);
                     loadedTasks.add(task);
                 } catch (NexusException e) {
-                    System.out.println("    " + e.getMessage());
+                    String errorMsg = e.getMessage() + " (at line " + lineNumber + ")";
+                    throw new NexusException(errorMsg);
                 }
+                lineNumber++;
             }
 
         } catch (IOException e) {
@@ -86,13 +91,24 @@ public class Storage {
             if (components.length < 4) {
                 throw new NexusException("// ERROR: CORRUPTED DEADLINE FORMAT");
             }
-            return new Deadline(taskDesc, components[3], isDone);
+
+            try {
+                return new Deadline(taskDesc, components[3], isDone);
+            } catch (DateTimeException e) {
+                throw new NexusException("// ERROR: INVALID DATE FORMAT");
+            }
         case "E":
             if (components.length < 5) {
                 throw new NexusException("// ERROR: CORRUPTED EVENT FORMAT");
             }
-            return new Event(taskDesc, components[3], components[4], isDone);
+
+            try {
+                return new Event(taskDesc, components[3], components[4], isDone);
+            } catch (DateTimeException e) {
+                throw new NexusException("// ERROR: INVALID DATE FORMAT");
+            }
         default:
+            assert false : "Unknown task type";
             throw new NexusException("// ERROR: INVALID TASK TYPE");
         }
     }
