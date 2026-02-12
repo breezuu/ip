@@ -14,6 +14,10 @@ import nexus.ui.Ui;
  * Command to check for tasks occurring on a specific date.
  */
 public class CheckCommand extends Command {
+    private static final String HEADER = "[NEXUS]: Checking for existing deadlines/events with the specified date...\n";
+    private static final String DATE_ERROR_PROMPT = "[NEXUS]: Did you follow the date format (DD/MM/YYYY)?\n";
+    private static final String COMMAND_EXAMPLE = "// e.g. 'check 01/01/2002'";
+
     private final String dateToCheck;
 
     /**
@@ -34,25 +38,18 @@ public class CheckCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
-        ArrayList<Task> taskList = tasks.getTasks();
-        List<Task> result;
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("[NEXUS]: Checking for existing deadlines/events with the specified date...\n");
-
         try {
-            result = taskList.stream()
-                    .filter(t -> t.isValidDateWindow(this.dateToCheck))
-                    .toList();
-            sb.append(ui.printTaskListGui(result));
+            List<Task> matchingTasks = findTasksMatchingKeyword(tasks);
+            return HEADER + ui.printTaskListGui(matchingTasks);
         } catch (DateTimeParseException e) {
-            StringBuilder sb2 = new StringBuilder();
-            sb2.append("[NEXUS]: Did you follow the date format (DD/MM/YYYY)?\n");
-            sb2.append("// e.g. 'check 01/01/2002'");
-            return sb2.toString();
+            return DATE_ERROR_PROMPT + COMMAND_EXAMPLE;
         }
+    }
 
-        return sb.toString();
+    private List<Task> findTasksMatchingKeyword(TaskList tasks) {
+        return tasks.getTasks().stream()
+                .filter(t -> t.isValidDateWindow(this.dateToCheck))
+                .toList();
     }
 
     /**

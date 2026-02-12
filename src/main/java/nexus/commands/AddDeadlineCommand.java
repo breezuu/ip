@@ -12,6 +12,9 @@ import nexus.ui.Ui;
  * Command to add a deadline task to the task list.
  */
 public class AddDeadlineCommand extends Command {
+    private static final String DATE_ERROR_PROMPT = "[NEXUS]: Did you follow the date and time format (12-hour)?\n";
+    private static final String COMMAND_EXAMPLE = "// e.g. 'deadline quiz /by 01/01/2002 10:00 AM'";
+
     private final String description;
     private final String deadline;
     private final boolean isDone;
@@ -38,8 +41,6 @@ public class AddDeadlineCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
-        StringBuilder sb = new StringBuilder();
-
         try {
             int prevTaskCount = tasks.getSize();
 
@@ -48,16 +49,11 @@ public class AddDeadlineCommand extends Command {
 
             assert tasks.getSize() == prevTaskCount + 1 : "Size of TaskList object should increase by 1";
 
-            sb.append(ui.printAddedTask(deadlineTask, tasks));
             storage.saveTasks(tasks.getTasks());
-
+            return ui.printAddedTask(deadlineTask, tasks);
         } catch (DateTimeParseException e) {
-            StringBuilder sb2 = new StringBuilder();
-            sb2.append("[NEXUS]: Did you follow the date and time format (12-hour)?\n");
-            sb2.append("// e.g. 'deadline quiz /by 01/01/2002 10:00 AM'");
-            return sb2.toString();
+            return DATE_ERROR_PROMPT + COMMAND_EXAMPLE;
         }
-        return sb.toString();
     }
 
     /**

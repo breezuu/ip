@@ -38,9 +38,8 @@ public class DeleteCommand extends Command {
 
         assert tasks.getSize() == prevTaskCount - 1 : "Size of TaskList object should decrease by 1";
 
-        String response = ui.printDeletedTask(removedTask, tasks);
         storage.saveTasks(tasks.getTasks());
-        return response;
+        return ui.printDeletedTask(removedTask, tasks);
     }
 
     /**

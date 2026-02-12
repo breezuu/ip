@@ -13,6 +13,13 @@ import nexus.tasks.TaskList;
 public class Ui {
     private static final int WIDTH = 60;
     private static final String BORDER = "  " + "-".repeat(WIDTH);
+    private static final String FIRST_GREETING_MESSAGE = "[NEXUS]: Greetings. I am Nexus, your personal chatbot.\n";
+    private static final String SECOND_GREETING_MESSAGE = "[NEXUS]: How can I assist you?";
+    private static final String FAREWELL_MESSAGE = "[NEXUS]: Request acknowledged. Nexus is now going offline.";
+    private static final String NEXUS_ACCESSING_DATABANK = "[NEXUS]: Accessing databank...\n";
+    private static final String NEXUS_DATABANK_ENTRY_PURGED = "[NEXUS]: Databank entry purged.\n";
+    private static final String NEXUS_DATABANK_UPDATED_SUCCESSFULLY = "[NEXUS]: Databank updated successfully.\n";
+    private static final String NEXUS_ARROW_INDENT = ">>>> %s\n";
     private final Scanner sc;
 
     /**
@@ -52,8 +59,8 @@ public class Ui {
         simulateBoot();
         // printLine();
         sb.append("\n");
-        sb.append("[NEXUS]: Greetings. I am Nexus, your personal chatbot.\n");
-        sb.append("[NEXUS]: How can I assist you?");
+        sb.append(FIRST_GREETING_MESSAGE);
+        sb.append(SECOND_GREETING_MESSAGE);
         // System.out.println("    [NEXUS]: Greetings. I am Nexus, your personal chatbot.");
         // System.out.println("    [NEXUS]: How can I assist you?");
         // printLine();
@@ -65,7 +72,7 @@ public class Ui {
      */
     public String printFarewell() {
         // System.out.println("    [NEXUS]: Request acknowledged. Nexus is now going offline.");
-        return "[NEXUS]: Request acknowledged. Nexus is now going offline.";
+        return FAREWELL_MESSAGE;
     }
 
     /**
@@ -73,16 +80,18 @@ public class Ui {
      * @param taskList The list of tasks to be displayed.
      */
     public void printTaskList(List<Task> taskList) {
-        System.out.println("    [NEXUS]: Accessing databank...");
-        if (!taskList.isEmpty()) {
-            String numTasks = taskList.size() > 1 ? " TASKS" : " TASK";
-            System.out.println("    // CURRENT_TOTAL: " + taskList.size() + numTasks + "\n");
+        System.out.println(NEXUS_ACCESSING_DATABANK);
 
-            for (int i = 0; i < taskList.size(); i++) {
-                System.out.printf("    " + "TASK@ADDR_%d. %s\n", i + 1, taskList.get(i).toString());
-            }
-        } else {
+        if (taskList.isEmpty()) {
             System.out.println("    // NO TASKS FOUND");
+            return;
+        }
+
+        String numTasks = taskList.size() > 1 ? " TASKS" : " TASK";
+        System.out.println("    // CURRENT_TOTAL: " + taskList.size() + numTasks + "\n");
+
+        for (int i = 0; i < taskList.size(); i++) {
+            System.out.printf("    " + "TASK@ADDR_%d. %s\n", i + 1, taskList.get(i).toString());
         }
     }
 
@@ -92,16 +101,18 @@ public class Ui {
      * @return A formatted string representation of the task list.
      */
     public String printTaskListGui(List<Task> taskList) {
-        StringBuilder sb = new StringBuilder("[NEXUS]: Accessing databank...\n");
-        if (!taskList.isEmpty()) {
-            String numTasks = taskList.size() > 1 ? " TASKS" : " TASK";
-            sb.append("// CURRENT_TOTAL: ").append(taskList.size()).append(numTasks).append("\n");
+        StringBuilder sb = new StringBuilder(NEXUS_ACCESSING_DATABANK);
 
-            for (int i = 0; i < taskList.size(); i++) {
-                sb.append("TASK@ADDR_%d. %s\n".formatted(i + 1, taskList.get(i).toString()));
-            }
-        } else {
+        if (taskList.isEmpty()) {
             sb.append("// NO TASKS FOUND");
+            return sb.toString();
+        }
+
+        String numTasks = taskList.size() > 1 ? " TASKS" : " TASK";
+        sb.append("// CURRENT_TOTAL: ").append(taskList.size()).append(numTasks).append("\n");
+
+        for (int i = 0; i < taskList.size(); i++) {
+            sb.append("TASK@ADDR_%d. %s\n".formatted(i + 1, taskList.get(i).toString()));
         }
 
         return sb.toString();
@@ -147,9 +158,9 @@ public class Ui {
      * @return A formatted string representation of the task deletion confirmation.
      */
     public String printDeletedTask(Task removedTask, TaskList taskList) {
-        StringBuilder sb = new StringBuilder("[NEXUS]: Databank entry purged.\n");
+        StringBuilder sb = new StringBuilder(NEXUS_DATABANK_ENTRY_PURGED);
         // System.out.println("    [NEXUS]: Databank entry purged.");
-        sb.append(">>>> %s\n".formatted(removedTask.toString()));
+        sb.append(NEXUS_ARROW_INDENT.formatted(removedTask.toString()));
         // System.out.println("    >>>> " + removedTask.toString());
         String numTasks = taskList.getSize() == 1 ? " TASK" : " TASKS";
         // System.out.println("    // CURRENT_TOTAL: " + tasks.getSize() + numTasks);
@@ -165,7 +176,7 @@ public class Ui {
      * @return A formatted string representation of the task update confirmation.
      */
     public String printUpdatedTask(ArrayList<Task> tasks, int index) {
-        StringBuilder sb = new StringBuilder("[NEXUS]: Databank updated successfully.\n");
+        StringBuilder sb = new StringBuilder(NEXUS_DATABANK_UPDATED_SUCCESSFULLY);
         // System.out.println("    [NEXUS]: Databank updated successfully.");
         sb.append("TASK@ADDR_%d. %s".formatted(index, tasks.get(index - 1).toString()));
         // System.out.printf("    TASK@ADDR_%d. %s", index, tasks.get(index - 1).toString());

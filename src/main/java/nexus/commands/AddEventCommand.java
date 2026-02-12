@@ -12,6 +12,9 @@ import nexus.ui.Ui;
  * Command to add an event task to the task list.
  */
 public class AddEventCommand extends Command {
+    private static final String DATE_ERROR_PROMPT = "[NEXUS]: Did you follow the date and time format (12-hour)?\n";
+    private static final String COMMAND_EXAMPLE = "// e.g. 'event race /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM'";
+
     private final String description;
     private final String startTime;
     private final String endTime;
@@ -41,8 +44,6 @@ public class AddEventCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
-        StringBuilder sb = new StringBuilder();
-
         try {
             int prevTaskCount = tasks.getSize();
 
@@ -51,15 +52,11 @@ public class AddEventCommand extends Command {
 
             assert tasks.getSize() == prevTaskCount + 1 : "Size of TaskList object should increase by 1";
 
-            sb.append(ui.printAddedTask(eventTask, tasks));
             storage.saveTasks(tasks.getTasks());
+            return ui.printAddedTask(eventTask, tasks);
         } catch (DateTimeParseException e) {
-            StringBuilder sb2 = new StringBuilder();
-            sb2.append("[NEXUS]: Did you follow the date and time format (12-hour)?\n");
-            sb2.append("// e.g. 'event race /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM'");
-            return sb2.toString();
+            return DATE_ERROR_PROMPT + COMMAND_EXAMPLE;
         }
-        return sb.toString();
     }
 
     /**

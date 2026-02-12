@@ -8,6 +8,10 @@ import nexus.exception.NexusException;
  * TaskList class which manages a list of tasks.
  */
 public class TaskList {
+    private static final String DATABANK_EMPTY_PROMPT = "// ERROR: DATABANK EMPTY";
+    private static final String TASK_NUMBER_OUT_OF_BOUNDS_PROMPT = "// ERROR: TASK NUMBER OUT OF BOUNDS\n";
+    private static final String CURRENT_TOTAL_PREFIX = "// CURRENT_TOTAL: %d %s";
+
     private final ArrayList<Task> tasks;
     private final String[] taskTypes = new String[]{"Todo", "Deadline", "Event"};
 
@@ -73,16 +77,14 @@ public class TaskList {
      * @throws NexusException If the index is out of bounds or the task list is empty.
      */
     public void validateIndex(int index) throws NexusException {
-        StringBuilder sb = new StringBuilder();
-
         if (this.tasks.isEmpty()) {
-            sb.append("// ERROR: DATABANK EMPTY");
-            throw new NexusException(sb.toString());
+            throw new NexusException(DATABANK_EMPTY_PROMPT);
 
         } else if (index < 1 || index > this.tasks.size()) {
-            sb.append("// ERROR: TASK NUMBER OUT OF BOUNDS\n");
+            StringBuilder sb = new StringBuilder();
+            sb.append(TASK_NUMBER_OUT_OF_BOUNDS_PROMPT);
             String numTasks = this.tasks.size() > 1 ? "TASKS" : "TASK";
-            sb.append("// CURRENT_TOTAL: %d %s".formatted(this.tasks.size(), numTasks));
+            sb.append(CURRENT_TOTAL_PREFIX.formatted(this.tasks.size(), numTasks));
             throw new NexusException(sb.toString());
         }
     }

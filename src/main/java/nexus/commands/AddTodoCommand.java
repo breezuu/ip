@@ -33,15 +33,13 @@ public class AddTodoCommand extends Command {
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         int prevTaskCount = tasks.getSize();
 
-        StringBuilder sb = new StringBuilder();
         Task todoTask = new Todo(this.description, false);
         tasks.addTask(todoTask);
 
         assert tasks.getSize() == prevTaskCount + 1 : "Size of TaskList object should increase by 1";
 
-        sb.append(ui.printAddedTask(todoTask, tasks));
         storage.saveTasks(tasks.getTasks());
-        return sb.toString();
+        return ui.printAddedTask(todoTask, tasks);
     }
 
     /**
