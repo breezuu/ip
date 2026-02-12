@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import nexus.Nexus;
 import nexus.exception.NexusException;
 import nexus.tasks.Deadline;
 import nexus.tasks.Event;
@@ -18,6 +19,13 @@ import nexus.tasks.Todo;
  * Storage class responsible for loading and saving tasks to a file.
  */
 public class Storage {
+    private static final String INVALID_TASK_FORMAT = "// ERROR: INVALID TASK FORMAT";
+    private static final String INVALID_TASK_TYPE = "// ERROR: INVALID TASK TYPE";
+    private static final String CORRUPTED_DEADLINE_FORMAT = "// ERROR: CORRUPTED DEADLINE FORMAT";
+    private static final String CORRUPTED_EVENT_FORMAT = "// ERROR: CORRUPTED EVENT FORMAT";
+
+    private static final String SEPARATOR = "\\s*\\|\\s*";
+
     private final String filePath;
 
     /**
@@ -34,33 +42,30 @@ public class Storage {
      * @throws NexusException If there is an error loading tasks from the file.
      */
     public ArrayList<Task> loadTasks() throws NexusException {
+        checkDirectoryAndFile();
         ArrayList<Task> loadedTasks = new ArrayList<>();
 
-        Path filePath = Paths.get("data", "databank.txt");
-
         try {
-            checkDirectory(); // Check if the 'data' directory exists
-
-            if (Files.notExists(filePath)) { // If the file 'databank.txt' does not exist...
-                Files.createFile(filePath); // Create the file
-            }
-
-            List<String> lines = Files.readAllLines(filePath);
+            List<String> lines = Files.readAllLines(Paths.get(this.filePath));
 
             for (String s : lines) {
-                try {
-                    Task task = parseTasks(s);
-                    loadedTasks.add(task);
-                } catch (NexusException e) {
-                    System.out.println("    " + e.getMessage());
-                }
+                processLine(s, loadedTasks);
             }
 
         } catch (IOException e) {
-            System.out.println("    // ERROR: " + e.getMessage());
+            throw new NexusException(e.getMessage());
         }
 
         return loadedTasks;
+    }
+
+    private void processLine(String s, ArrayList<Task> loadedTasks) throws NexusException {
+        try {
+            Task task = parseTasks(s);
+            loadedTasks.add(task);
+        } catch (NexusException e) {
+            throw new NexusException(e.getMessage());
+        }
     }
 
     /**
@@ -70,9 +75,9 @@ public class Storage {
      * @throws NexusException If the task string is invalid or cannot be parsed.
      */
     public Task parseTasks(String s) throws NexusException {
-        String[] components = s.split("\\s*\\|\\s*"); // Splits the task based on '|'
+        String[] components = s.split(SEPARATOR); // Splits the task based on '|'
         if (components.length < 3) {
-            throw new NexusException("// ERROR: INVALID TASK FORMAT");
+            throw new NexusException(INVALID_TASK_FORMAT);
         }
 
         String taskType = components[0].trim();
@@ -83,44 +88,62 @@ public class Storage {
         case "T":
             return new Todo(taskDesc, isDone);
         case "D":
-            if (components.length < 4) {
-                throw new NexusException("// ERROR: CORRUPTED DEADLINE FORMAT");
-            }
-            return new Deadline(taskDesc, components[3], isDone);
+            return createDeadline(components, taskDesc, isDone);
         case "E":
-            if (components.length < 5) {
-                throw new NexusException("// ERROR: CORRUPTED EVENT FORMAT");
-            }
-            return new Event(taskDesc, components[3], components[4], isDone);
+            return createEvent(components, taskDesc, isDone);
         default:
-            throw new NexusException("// ERROR: INVALID TASK TYPE");
+            throw new NexusException(INVALID_TASK_TYPE);
         }
+    }
+
+    private static Deadline createDeadline(String[] components, String taskDesc, boolean isDone) throws NexusException {
+        if (components.length < 4) {
+            throw new NexusException(CORRUPTED_DEADLINE_FORMAT);
+        }
+        return new Deadline(taskDesc, components[3], isDone);
+    }
+
+    private static Event createEvent(String[] components, String taskDesc, boolean isDone) throws NexusException {
+        if (components.length < 5) {
+            throw new NexusException(CORRUPTED_EVENT_FORMAT);
+        }
+        return new Event(taskDesc, components[3], components[4], isDone);
     }
 
     /**
      * Saves the tasks to the file.
      * @param tasks List of tasks to be saved.
      */
-    public void saveTasks(List<Task> tasks) {
+    public void saveTasks(List<Task> tasks) throws NexusException {
         try {
-            FileWriter fw = new FileWriter("./data/databank.txt");
+            FileWriter fw = new FileWriter(this.filePath);
             for (Task t : tasks) {
                 fw.write(t.saveString() + System.lineSeparator());
             }
             fw.close();
         } catch (IOException e) {
-            System.out.println("    // ERROR: " + e.getMessage());
+            throw new NexusException(e.getMessage());
         }
     }
 
     /**
-     * Checks if the data directory exists and creates it if it does not exist.
-     * @throws IOException If there is an error creating the directory.
+     * Checks if the data directory and file exist and creates them if they do not exist.
+     * @throws NexusException If there is an error creating the directory.
      */
-    public void checkDirectory() throws IOException {
-        Path path = Paths.get("data");
-        if (Files.notExists(path)) {
-            Files.createDirectory(path);
+    private void checkDirectoryAndFile() throws NexusException {
+        try {
+            Path path = Paths.get(this.filePath);
+            Path parentDir = path.getParent();
+
+            if ((parentDir != null) && (Files.notExists(parentDir))) {
+                Files.createDirectories(parentDir);
+            }
+
+            if (Files.notExists(path)) {
+                Files.createFile(path);
+            }
+        } catch (IOException e) {
+            throw new NexusException(e.getMessage());
         }
     }
 }

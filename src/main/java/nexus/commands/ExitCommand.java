@@ -24,8 +24,7 @@ public class ExitCommand extends Command {
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         storage.saveTasks(tasks.getTasks());
-        String response = ui.printFarewell();
-        return response;
+        return ui.printFarewell();
     }
 
     /**

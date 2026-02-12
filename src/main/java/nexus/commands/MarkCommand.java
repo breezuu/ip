@@ -35,13 +35,10 @@ public class MarkCommand extends Command {
         tasks.validateIndex(index);
 
         ArrayList<Task> taskList = tasks.getTasks();
-
         taskList.get(index - 1).mark();
 
         storage.saveTasks(taskList);
-
-        String response = ui.printUpdatedTask(taskList, index);
-        return response;
+        return ui.printUpdatedTask(taskList, index);
     }
 
     /**

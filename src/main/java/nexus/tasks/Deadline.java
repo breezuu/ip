@@ -8,9 +8,13 @@ import java.util.Locale;
  * Deadline class which represents a task with a deadline.
  */
 public class Deadline extends Task {
+    private static final String INPUT_FORMAT = "d/M/yyyy h:mm a";
+    private static final String OUTPUT_FORMAT = "MMM dd yyyy h:mm a";
+    private static final String DATE_FORMAT = "d/M/yyyy";
+
     private final LocalDateTime deadlineTime;
-    private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("d/M/yyyy h:mm a", Locale.ENGLISH);
-    private final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("MMM dd yyyy h:mm a", Locale.ENGLISH);
+    private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern(INPUT_FORMAT, Locale.ENGLISH);
+    private final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern(OUTPUT_FORMAT, Locale.ENGLISH);
 
     /**
      * Constructs a Deadline object with the specified description, deadline, and completion status.
@@ -30,7 +34,7 @@ public class Deadline extends Task {
      */
     @Override
     public boolean isValidDateWindow(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
         return this.deadlineTime.format(formatter).equals(date);
     }
 

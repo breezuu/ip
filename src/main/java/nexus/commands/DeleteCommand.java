@@ -33,9 +33,8 @@ public class DeleteCommand extends Command {
         tasks.validateIndex(index);
 
         Task removedTask = tasks.deleteTask(index - 1);
-        String response = ui.printDeletedTask(removedTask, tasks);
         storage.saveTasks(tasks.getTasks());
-        return response;
+        return ui.printDeletedTask(removedTask, tasks);
     }
 
     /**

@@ -11,6 +11,8 @@ import nexus.ui.Ui;
  * Main application class for Nexus.
  */
 public class Nexus {
+    private static final String DATA_FILE_PATH = "data/databank.txt";
+
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
@@ -61,7 +63,7 @@ public class Nexus {
      * @param args Command-line arguments (not used).
      */
     public static void main(String[] args) {
-        new Nexus("data/databank.txt").run();
+        new Nexus(DATA_FILE_PATH).run();
     }
 
     /**

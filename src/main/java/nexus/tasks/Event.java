@@ -8,10 +8,14 @@ import java.util.Locale;
  * Event class which represents a task with a start and end time.
  */
 public class Event extends Task {
+    private static final String INPUT_FORMAT = "d/M/yyyy h:mm a";
+    private static final String OUTPUT_FORMAT = "MMM dd yyyy h:mm a";
+    private static final String DATE_FORMAT = "d/M/yyyy";
+
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
-    private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("d/M/yyyy h:mm a", Locale.ENGLISH);
-    private final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern("MMM dd yyyy h:mm a", Locale.ENGLISH);
+    private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern(INPUT_FORMAT, Locale.ENGLISH);
+    private final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern(OUTPUT_FORMAT, Locale.ENGLISH);
 
     /**
      * Constructs an Event object with the specified description, start time, end time, and completion status.
@@ -33,7 +37,7 @@ public class Event extends Task {
      */
     @Override
     public boolean isValidDateWindow(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
         return this.startTime.format(formatter).equals(date);
     }
 

@@ -31,12 +31,10 @@ public class AddTodoCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
-        StringBuilder sb = new StringBuilder();
         Task todoTask = new Todo(this.description, false);
         tasks.addTask(todoTask);
-        sb.append(ui.printAddedTask(todoTask, tasks));
         storage.saveTasks(tasks.getTasks());
-        return sb.toString();
+        return ui.printAddedTask(todoTask, tasks);
     }
 
     /**

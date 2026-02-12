@@ -12,6 +12,9 @@ import nexus.ui.Ui;
  * Command to find tasks in the task list based on a keyword.
  */
 public class FindCommand extends Command {
+    private static final String HEADER = "[NEXUS]: Checking for existing tasks with the specified keyword...\n";
+    private static final String ERROR_PROMPT = "[NEXUS]: The keyword cannot be null or empty.\n";
+    private static final String COMMAND_EXAMPLE = "// e.g. 'find quiz'";
     private final String keyword;
 
     /**
@@ -32,17 +35,18 @@ public class FindCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
-        StringBuilder sb = new StringBuilder();
         try {
-            List<Task> res = tasks.getTasks().stream().filter(t -> t.getDescription().contains(keyword)).toList();
-            sb.append(ui.printTaskListGui(res));
+            List<Task> matchingTasks = findTasksMatchingDate(tasks);
+            return HEADER + ui.printTaskListGui(matchingTasks);
         } catch (NullPointerException e) {
-            StringBuilder sb2 = new StringBuilder();
-            sb2.append("[NEXUS]: The keyword cannot be null or empty.\n");
-            sb2.append("// e.g. 'find quiz'");
-            return sb2.toString();
+            return ERROR_PROMPT + COMMAND_EXAMPLE;
         }
-        return sb.toString();
+    }
+
+    private List<Task> findTasksMatchingDate(TaskList tasks) {
+        return tasks.getTasks().stream()
+                .filter(t -> t.getDescription().contains(keyword))
+                .toList();
     }
 
     /**

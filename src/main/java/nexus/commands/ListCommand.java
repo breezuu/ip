@@ -19,8 +19,7 @@ public class ListCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
-        String response = ui.printTaskListGui(tasks.getTasks());
-        return response;
+        return ui.printTaskListGui(tasks.getTasks());
     }
 
     /**
