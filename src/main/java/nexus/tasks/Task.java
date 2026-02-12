@@ -69,7 +69,7 @@ public class Task {
      * @return String representation of the task for saving.
      */
     public String saveString() {
-        return "Task" + " | " + (isDone ? "1" : "0") + " | " + description;
+        return "Task" + " | " + (this.isDone ? "1" : "0") + " | " + this.description;
     }
 
     /**

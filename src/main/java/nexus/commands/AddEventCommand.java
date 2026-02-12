@@ -13,7 +13,7 @@ import nexus.ui.Ui;
  */
 public class AddEventCommand extends Command {
     private static final String DATE_ERROR_PROMPT = "[NEXUS]: Did you follow the date and time format (12-hour)?\n";
-    private static final String COMMAND_EXAMPLE = "// e.g. 'event race /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM'";
+    private static final String CMD_EXAMPLE = "// e.g. 'event race /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM'";
 
     private final String description;
     private final String startTime;
@@ -55,7 +55,7 @@ public class AddEventCommand extends Command {
             storage.saveTasks(tasks.getTasks());
             return ui.printAddedTask(eventTask, tasks);
         } catch (DateTimeParseException e) {
-            return DATE_ERROR_PROMPT + COMMAND_EXAMPLE;
+            return DATE_ERROR_PROMPT + CMD_EXAMPLE;
         }
     }
 
