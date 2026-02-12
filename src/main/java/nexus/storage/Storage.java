@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class Storage {
 
         try {
             List<String> lines = Files.readAllLines(Paths.get(this.filePath));
+
+            int lineNumber = 1;
 
             for (String s : lines) {
                 processLine(s, loadedTasks);
@@ -92,6 +95,7 @@ public class Storage {
         case "E":
             return createEvent(components, taskDesc, isDone);
         default:
+            assert false : "Unknown task type";
             throw new NexusException(INVALID_TASK_TYPE);
         }
     }

@@ -45,8 +45,13 @@ public class AddEventCommand extends Command {
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         try {
+            int prevTaskCount = tasks.getSize();
+
             Event eventTask = new Event(this.description, this.startTime, this.endTime, this.isDone);
             tasks.addTask(eventTask);
+
+            assert tasks.getSize() == prevTaskCount + 1 : "Size of TaskList object should increase by 1";
+
             storage.saveTasks(tasks.getTasks());
             return ui.printAddedTask(eventTask, tasks);
         } catch (DateTimeParseException e) {

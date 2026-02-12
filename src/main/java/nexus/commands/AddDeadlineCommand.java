@@ -42,8 +42,13 @@ public class AddDeadlineCommand extends Command {
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         try {
+            int prevTaskCount = tasks.getSize();
+
             Deadline deadlineTask = new Deadline(this.description, this.deadline, this.isDone);
             tasks.addTask(deadlineTask);
+
+            assert tasks.getSize() == prevTaskCount + 1 : "Size of TaskList object should increase by 1";
+
             storage.saveTasks(tasks.getTasks());
             return ui.printAddedTask(deadlineTask, tasks);
         } catch (DateTimeParseException e) {
