@@ -44,8 +44,13 @@ public class AddEventCommand extends Command {
         StringBuilder sb = new StringBuilder();
 
         try {
+            int prevTaskCount = tasks.getSize();
+
             Event eventTask = new Event(this.description, this.startTime, this.endTime, this.isDone);
             tasks.addTask(eventTask);
+
+            assert tasks.getSize() == prevTaskCount + 1 : "Size of TaskList object should increase by 1";
+
             sb.append(ui.printAddedTask(eventTask, tasks));
             storage.saveTasks(tasks.getTasks());
         } catch (DateTimeParseException e) {

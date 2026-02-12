@@ -30,9 +30,14 @@ public class DeleteCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
+        int prevTaskCount = tasks.getSize();
+
         tasks.validateIndex(index);
 
         Task removedTask = tasks.deleteTask(index - 1);
+
+        assert tasks.getSize() == prevTaskCount - 1 : "Size of TaskList object should decrease by 1";
+
         String response = ui.printDeletedTask(removedTask, tasks);
         storage.saveTasks(tasks.getTasks());
         return response;
