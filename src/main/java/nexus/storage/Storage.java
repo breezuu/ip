@@ -5,14 +5,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.List;
 
-import nexus.Nexus;
 import nexus.exception.NexusException;
 import nexus.tasks.Deadline;
 import nexus.tasks.Event;
+import nexus.tasks.Note;
 import nexus.tasks.Task;
 import nexus.tasks.Todo;
 
@@ -94,6 +93,8 @@ public class Storage {
             return createDeadline(components, taskDesc, isDone);
         case "E":
             return createEvent(components, taskDesc, isDone);
+        case "N":
+            return new Note(taskDesc, isDone);
         default:
             assert false : "Unknown task type";
             throw new NexusException(INVALID_TASK_TYPE);

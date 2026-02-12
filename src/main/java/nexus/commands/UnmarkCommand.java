@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import nexus.exception.NexusException;
 import nexus.storage.Storage;
+import nexus.tasks.Note;
 import nexus.tasks.Task;
 import nexus.tasks.TaskList;
 import nexus.ui.Ui;
@@ -35,7 +36,14 @@ public class UnmarkCommand extends Command {
         tasks.validateIndex(index);
 
         ArrayList<Task> taskList = tasks.getTasks();
-        taskList.get(index - 1).unmark();
+
+        Task targetTask = taskList.get(index - 1);
+
+        if (targetTask instanceof Note) {
+            throw new NexusException("[NEXUS]: ITEM@ADDR_" + index + " is a note and cannot be unmarked.");
+        }
+
+        targetTask.unmark();
 
         storage.saveTasks(taskList);
         return ui.printUpdatedTask(taskList, index);

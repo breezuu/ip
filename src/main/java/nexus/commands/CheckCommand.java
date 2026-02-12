@@ -1,7 +1,6 @@
 package nexus.commands;
 
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 
 import nexus.exception.NexusException;
@@ -16,7 +15,7 @@ import nexus.ui.Ui;
 public class CheckCommand extends Command {
     private static final String HEADER = "[NEXUS]: Checking for existing deadlines/events with the specified date...\n";
     private static final String DATE_ERROR_PROMPT = "[NEXUS]: Did you follow the date format (DD/MM/YYYY)?\n";
-    private static final String COMMAND_EXAMPLE = "// e.g. 'check 01/01/2002'";
+    private static final String CMD_EXAMPLE = "// e.g. 'check 01/01/2002'";
 
     private final String dateToCheck;
 
@@ -40,9 +39,9 @@ public class CheckCommand extends Command {
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         try {
             List<Task> matchingTasks = findTasksMatchingKeyword(tasks);
-            return HEADER + ui.printTaskListGui(matchingTasks);
+            return HEADER + ui.printTaskListGui(matchingTasks, "tasks");
         } catch (DateTimeParseException e) {
-            return DATE_ERROR_PROMPT + COMMAND_EXAMPLE;
+            return DATE_ERROR_PROMPT + CMD_EXAMPLE;
         }
     }
 

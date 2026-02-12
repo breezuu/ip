@@ -37,7 +37,7 @@ public class FindCommand extends Command {
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         try {
             List<Task> matchingTasks = findTasksMatchingDate(tasks);
-            return HEADER + ui.printTaskListGui(matchingTasks);
+            return HEADER + ui.printTaskListGui(matchingTasks, "all");
         } catch (NullPointerException e) {
             return ERROR_PROMPT + COMMAND_EXAMPLE;
         }

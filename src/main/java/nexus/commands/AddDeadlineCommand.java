@@ -13,7 +13,7 @@ import nexus.ui.Ui;
  */
 public class AddDeadlineCommand extends Command {
     private static final String DATE_ERROR_PROMPT = "[NEXUS]: Did you follow the date and time format (12-hour)?\n";
-    private static final String COMMAND_EXAMPLE = "// e.g. 'deadline quiz /by 01/01/2002 10:00 AM'";
+    private static final String CMD_EXAMPLE = "// e.g. 'deadline quiz /by 01/01/2002 10:00 AM'";
 
     private final String description;
     private final String deadline;
@@ -52,7 +52,7 @@ public class AddDeadlineCommand extends Command {
             storage.saveTasks(tasks.getTasks());
             return ui.printAddedTask(deadlineTask, tasks);
         } catch (DateTimeParseException e) {
-            return DATE_ERROR_PROMPT + COMMAND_EXAMPLE;
+            return DATE_ERROR_PROMPT + CMD_EXAMPLE;
         }
     }
 

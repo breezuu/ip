@@ -9,6 +9,12 @@ import nexus.ui.Ui;
  * Command to list all tasks in the task list.
  */
 public class ListCommand extends Command {
+    private final String listType;
+
+    public ListCommand(String listType) {
+        this.listType = listType;
+    }
+
     /**
      * Executes ListCommand to display all tasks in the task list.
      * @param tasks A TaskList which is used to get all tasks.
@@ -19,7 +25,7 @@ public class ListCommand extends Command {
      */
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
-        return ui.printTaskListGui(tasks.getTasks());
+        return ui.printTaskListGui(tasks.getTasks(), this.listType);
     }
 
     /**

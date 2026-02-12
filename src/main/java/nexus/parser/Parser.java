@@ -2,6 +2,7 @@ package nexus.parser;
 
 import nexus.commands.AddDeadlineCommand;
 import nexus.commands.AddEventCommand;
+import nexus.commands.AddNoteCommand;
 import nexus.commands.AddTodoCommand;
 import nexus.commands.CheckCommand;
 import nexus.commands.Command;
@@ -32,7 +33,7 @@ public class Parser {
         case "bye":
             return new ExitCommand();
         case "list":
-            return new ListCommand();
+            return prepareList(args);
         case "mark":
             return new MarkCommand(parseIndex(split));
         case "unmark":
@@ -49,6 +50,8 @@ public class Parser {
             return new CheckCommand(parseDate(args));
         case "find":
             return new FindCommand(args);
+        case "note":
+            return prepareNote(args);
         default:
             assert false : "Unknown command type";
             throw new NexusException("INVALID COMMAND. PLEASE TRY AGAIN.");
@@ -65,7 +68,6 @@ public class Parser {
         if (split.length < 2 || split[1].isBlank()) {
             StringBuilder sb = new StringBuilder();
             sb.append("[NEXUS]: Please specify the task number you wish to mark or delete.\n");
-            // System.out.println("    [NEXUS]: Please specify the task number you wish to mark or delete.");
             sb.append("// EXAMPLE: mark 6, delete 7");
             throw new NexusException(sb.toString());
         }
@@ -88,7 +90,6 @@ public class Parser {
             StringBuilder sb = new StringBuilder();
             sb.append("[NEXUS]: Please specify the date you wish to check.\n");
             sb.append("// EXAMPLE: check 1/1/2002");
-            // System.out.println("    [NEXUS]: Please specify the date you wish to check.");
             throw new NexusException(sb.toString());
         }
 
@@ -107,8 +108,6 @@ public class Parser {
             sb.append("// ERROR: INVALID TO-DO TASK\n");
             sb.append("[NEXUS]: Did you forget to specify the 'To-Do' description?\n");
             sb.append("// EXAMPLE: todo tidy up room");
-            // System.out.println("    // ERROR: INVALID TO-DO TASK");
-            // System.out.println("    [NEXUS]: Did you forget to specify the 'To-Do' description?");
             throw new NexusException(sb.toString());
         }
         return new AddTodoCommand(info);
@@ -126,8 +125,6 @@ public class Parser {
             sb.append("// ERROR: INVALID DEADLINE TASK\n");
             sb.append("[NEXUS]: Did you miss out on the '/by' specifier?\n");
             sb.append("// EXAMPLE: deadline quiz /by 01/01/2002 12:00 PM");
-            // System.out.println("    // ERROR: INVALID DEADLINE TASK");
-            // System.out.println("    [NEXUS]: Did you miss out on the '/by' specifier?");
             throw new NexusException(sb.toString());
         }
 
@@ -177,5 +174,36 @@ public class Parser {
         String endTime = eventTimeSplit[1].trim();
 
         return new AddEventCommand(eventDesc, startTime, endTime, false);
+    }
+
+    /**
+     * Prepares a command to add a note to the note list.
+     * @param info The description of the note to be added.
+     * @return A command to add the note.
+     * @throws NexusException If the note description is missing.
+     */
+    private static Command prepareNote(String info) throws NexusException {
+        if (info.isBlank()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("// ERROR: INVALID NOTE\n");
+            sb.append("[NEXUS]: Did you forget to specify the note description?\n");
+            sb.append("// EXAMPLE: note finish quiz");
+            throw new NexusException(sb.toString());
+        }
+        return new AddNoteCommand(info);
+    }
+
+    /**
+     * Prepares a command to list tasks based on the specified type.
+     * @param args The type of tasks to list (e.g. "tasks", "deadlines", "events", "notes").
+     * @return A command to list tasks.
+     * @throws NexusException If the list type is invalid.
+     */
+    private static Command prepareList(String args) throws NexusException {
+        String type = args.trim();
+        if (type.isEmpty()) {
+            type = "all";
+        }
+        return new ListCommand(type);
     }
 }

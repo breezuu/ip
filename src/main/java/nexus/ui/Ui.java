@@ -3,7 +3,12 @@ package nexus.ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import nexus.tasks.Deadline;
+import nexus.tasks.Event;
+import nexus.tasks.Note;
 import nexus.tasks.Task;
 import nexus.tasks.TaskList;
 
@@ -96,11 +101,11 @@ public class Ui {
     }
 
     /**
-     * Prints the list of tasks to the user.
+     * Prints the list of tasks to the user in a GUI format.
      * @param taskList The list of tasks to be displayed.
-     * @return A formatted string representation of the task list.
+     * @param listType The type of tasks to be displayed (e.g. "all", "tasks", "deadlines", "events", "notes").
      */
-    public String printTaskListGui(List<Task> taskList) {
+    public String printTaskListGui(List<Task> taskList, String listType) {
         StringBuilder sb = new StringBuilder(NEXUS_ACCESSING_DATABANK);
 
         if (taskList.isEmpty()) {
@@ -108,14 +113,42 @@ public class Ui {
             return sb.toString();
         }
 
-        String numTasks = taskList.size() > 1 ? " TASKS" : " TASK";
-        sb.append("// CURRENT_TOTAL: ").append(taskList.size()).append(numTasks).append("\n");
+        List<Task> filteredList = taskList.stream()
+                .filter(task -> {
+                    if (listType.equalsIgnoreCase("tasks")) {
+                        return !(task instanceof Note);
+                    }
 
-        for (int i = 0; i < taskList.size(); i++) {
-            sb.append("TASK@ADDR_%d. %s\n".formatted(i + 1, taskList.get(i).toString()));
+                    if (listType.equalsIgnoreCase("deadlines")) {
+                        return task instanceof Deadline;
+                    }
+
+                    if (listType.equalsIgnoreCase("events")) {
+                        return task instanceof Event;
+                    }
+
+                    if (listType.equalsIgnoreCase("notes")) {
+                        return task instanceof Note;
+                    }
+
+                    return true;
+                })
+                .toList();
+
+        if (filteredList.isEmpty()) {
+            sb.append("// NO ").append(listType).append(" FOUND");
+            return sb.toString();
         }
 
-        return sb.toString();
+        String label = filteredList.size() > 1 ? " ITEMS" : " ITEM";
+        sb.append("// ").append(listType.toUpperCase()).append("_TOTAL: ")
+                .append(filteredList.size()).append(label).append("\n");
+
+        String body = IntStream.range(0, filteredList.size())
+                .mapToObj(i -> "TASK@ADDR_%d. %s".formatted(i + 1, filteredList.get(i).toString()))
+                .collect(Collectors.joining("\n"));
+
+        return sb.append(body).toString();
     }
 
     /**
@@ -141,12 +174,15 @@ public class Ui {
         case "E":
             taskType = "Event";
             break;
+        case "N":
+            taskType = "Note";
+            break;
         default:
-            // Do nothing
+            assert false : "Unknown task type";
         }
         String numTasks = taskList.getSize() > 1 ? " TASKS" : " TASK";
         sb.append("// CURRENT_TOTAL: %d%s\n".formatted(taskList.getSize(), numTasks));
-        sb.append("[NEXUS]: Your %s task has been added into the databank.".formatted(taskType));
+        sb.append("[NEXUS]: Your %s has been added into the databank.".formatted(taskType));
 
         return sb.toString();
     }
@@ -159,11 +195,8 @@ public class Ui {
      */
     public String printDeletedTask(Task removedTask, TaskList taskList) {
         StringBuilder sb = new StringBuilder(NEXUS_DATABANK_ENTRY_PURGED);
-        // System.out.println("    [NEXUS]: Databank entry purged.");
         sb.append(NEXUS_ARROW_INDENT.formatted(removedTask.toString()));
-        // System.out.println("    >>>> " + removedTask.toString());
         String numTasks = taskList.getSize() == 1 ? " TASK" : " TASKS";
-        // System.out.println("    // CURRENT_TOTAL: " + tasks.getSize() + numTasks);
         sb.append("// CURRENT_TOTAL: ").append(taskList.getSize()).append(numTasks).append("\n");
 
         return sb.toString();
@@ -177,9 +210,7 @@ public class Ui {
      */
     public String printUpdatedTask(ArrayList<Task> tasks, int index) {
         StringBuilder sb = new StringBuilder(NEXUS_DATABANK_UPDATED_SUCCESSFULLY);
-        // System.out.println("    [NEXUS]: Databank updated successfully.");
         sb.append("TASK@ADDR_%d. %s".formatted(index, tasks.get(index - 1).toString()));
-        // System.out.printf("    TASK@ADDR_%d. %s", index, tasks.get(index - 1).toString());
         return sb.toString();
     }
 
