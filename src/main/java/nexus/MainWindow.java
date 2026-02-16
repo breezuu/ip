@@ -27,7 +27,7 @@ public class MainWindow extends AnchorPane {
 
     private Nexus nexus;
 
-    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/student-user.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
     private final Image nexusImage = new Image(this.getClass().getResourceAsStream("/images/nexus-chatbot.png"));
 
     /**
@@ -49,10 +49,14 @@ public class MainWindow extends AnchorPane {
         String firstGreeting = "// INITIALIZING NEXUS... [OK] \n// LOADING DATABANK... [OK]";
         String secondGreeting = "[NEXUS]: Greetings. I am Nexus, your personal chatbot.\nHow can I assist you today?";
         String corruptedDataPrompt = this.nexus.getCorruptedDataPrompt();
+        String helpSolution = "[NEXUS]: You can add tasks by typing 'help' to see the available commands.";
 
         if (!corruptedDataPrompt.isEmpty()) {
             dialogContainer.getChildren().add(
                     DialogBox.getNexusDialog(corruptedDataPrompt, nexusImage, "Error")
+            );
+            dialogContainer.getChildren().add(
+                    DialogBox.getNexusDialog(helpSolution, nexusImage, "Help")
             );
         }
         dialogContainer.getChildren().add(

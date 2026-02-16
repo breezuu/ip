@@ -95,6 +95,9 @@ public class DialogBox extends HBox {
             dialog.getStyleClass().add("error-label");
             triggerErrorAnimation();
             break;
+        case "Help":
+            dialog.getStyleClass().add("help-label");
+            break;
         default:
             // Do nothing
         }

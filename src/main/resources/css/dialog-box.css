@@ -1,19 +1,42 @@
 .label {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
-    -fx-background-radius: 15 15 0 15;
-    -fx-text-fill: white;
-    -fx-border-color: rgba(255, 255, 255, 0.3);
-    -fx-border-width: 1;
-    -fx-padding: 10;
+    -fx-background-color: #2D3250;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Lucida Console", "Monospaced";
+    -fx-padding: 10 15;
+
+    -fx-background-radius: 12 0 0 12;
+
+    -fx-border-color: #7077A1;
+    -fx-border-width: 0 4 0 0;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 8, 0, 0, 0);
+}
+
+.label:hover {
+    -fx-background-color: #424769;
+    -fx-cursor: default;
 }
 
 .reply-label {
-    -fx-background-color: rgba(11, 26, 28, 0.85);
-    -fx-background-radius: 15 15 15 0;
-    -fx-text-fill: #00ffcc;
-    -fx-border-color: #00ffcc;
-    -fx-border-width: 1;
-    -fx-padding: 10;
+    /*-fx-background-color: rgba(11, 26, 28, 0.85);*/
+    /*-fx-background-radius: 15 15 15 0;*/
+    /*-fx-text-fill: #00ffcc;*/
+    /*-fx-border-color: #00ffcc;*/
+    /*-fx-border-width: 1;*/
+    /*-fx-padding: 10;*/
+
+    -fx-background-color: rgba(20, 25, 40, 0.95);
+    -fx-text-fill: #00e5ff;
+    -fx-font-family: "Lucida Console", "Monospaced";
+    -fx-padding: 20;
+    -fx-background-radius: 5;
+
+    -fx-border-color: #00e5ff;
+    -fx-border-width: 0 0 0 5;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.3), 15, 0, 0, 0);
+
+    -fx-line-spacing: 8px;
 }
 
 .add-label {
@@ -51,6 +74,31 @@
     -fx-border-radius: 10;
     -fx-padding: 10;
     -fx-effect: dropshadow(three-pass-box, rgba(198, 40, 40, 0.3), 10, 0, 0, 0);
+}
+
+.error-label:hover {
+    -fx-background-color: #FFF5F5;
+    -fx-background-radius: 10;
+    -fx-text-fill: #C62828;
+    -fx-border-color: #FF8A80;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(198, 40, 40, 0.3), 10, 0, 0, 0);
+}
+
+.help-label {
+    -fx-background-color: rgba(20, 25, 40, 0.95);
+    -fx-text-fill: #00e5ff;
+    -fx-font-family: "Lucida Console", "Monospaced";
+    -fx-padding: 20;
+    -fx-background-radius: 5;
+
+    -fx-border-color: #00e5ff;
+    -fx-border-width: 0 0 0 5;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.3), 15, 0, 0, 0);
+
+    -fx-line-spacing: 8px;
 }
 
 #displayPicture {

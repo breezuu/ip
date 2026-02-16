@@ -13,8 +13,7 @@ import nexus.ui.Ui;
  */
 public class FindCommand extends Command {
     private static final String HEADER = "[NEXUS]: Checking for existing tasks with the specified keyword...\n";
-    private static final String ERROR_PROMPT = "[NEXUS]: The keyword cannot be null or empty.\n";
-    private static final String COMMAND_EXAMPLE = "// e.g. 'find quiz'";
+    private static final String ERROR_PROMPT = "[NEXUS]: An error occurred while searching for tasks.\n";
     private final String keyword;
 
     /**
@@ -39,7 +38,7 @@ public class FindCommand extends Command {
             List<Task> matchingTasks = findTasksMatchingDate(tasks);
             return HEADER + ui.printTaskListGui(matchingTasks, "all");
         } catch (NullPointerException e) {
-            return ERROR_PROMPT + COMMAND_EXAMPLE;
+            throw new NexusException(ERROR_PROMPT);
         }
     }
 
