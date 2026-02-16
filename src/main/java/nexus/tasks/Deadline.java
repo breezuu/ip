@@ -2,19 +2,22 @@ package nexus.tasks;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.Locale;
 
 /**
  * Deadline class which represents a task with a deadline.
  */
 public class Deadline extends Task {
-    private static final String INPUT_FORMAT = "d/M/yyyy h:mm a";
-    private static final String OUTPUT_FORMAT = "MMM dd yyyy h:mm a";
-    private static final String DATE_FORMAT = "d/M/yyyy";
+    private static final String INPUT_FORMAT = "d/M/uuuu h:mm a";
+    private static final String OUTPUT_FORMAT = "MMM dd uuuu h:mm a";
+    private static final String DATE_FORMAT = "d/M/uuuu";
 
     private final LocalDateTime deadlineTime;
-    private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern(INPUT_FORMAT, Locale.ENGLISH);
-    private final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern(OUTPUT_FORMAT, Locale.ENGLISH);
+    private final DateTimeFormatter strictInput = DateTimeFormatter.ofPattern(INPUT_FORMAT, Locale.ENGLISH)
+            .withResolverStyle(ResolverStyle.STRICT);
+    private final DateTimeFormatter strictOutput = DateTimeFormatter.ofPattern(OUTPUT_FORMAT, Locale.ENGLISH)
+            .withResolverStyle(ResolverStyle.STRICT);
 
     /**
      * Constructs a Deadline object with the specified description, deadline, and completion status.
@@ -24,7 +27,7 @@ public class Deadline extends Task {
      */
     public Deadline(String desc, String deadline, boolean isDone) {
         super(desc, isDone);
-        this.deadlineTime = LocalDateTime.parse(deadline, inputFormat);
+        this.deadlineTime = LocalDateTime.parse(deadline, strictInput);
     }
 
     /**
@@ -53,7 +56,7 @@ public class Deadline extends Task {
      */
     @Override
     public String saveString() {
-        return "D" + " | " + (isDone ? "1" : "0") + " | " + description + " | " + deadlineTime.format(inputFormat);
+        return "D" + " | " + (isDone ? "1" : "0") + " | " + description + " | " + deadlineTime.format(strictInput);
     }
 
     /**
@@ -62,6 +65,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadlineTime.format(outputFormat) + ")";
+        return "[D]" + super.toString() + " (by: " + deadlineTime.format(strictOutput) + ")";
     }
 }

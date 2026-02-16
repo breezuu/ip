@@ -5,7 +5,6 @@ import java.util.Collections;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
-import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -95,6 +94,9 @@ public class DialogBox extends HBox {
         case "Error":
             dialog.getStyleClass().add("error-label");
             triggerErrorAnimation();
+            break;
+        case "Help":
+            dialog.getStyleClass().add("help-label");
             break;
         default:
             // Do nothing

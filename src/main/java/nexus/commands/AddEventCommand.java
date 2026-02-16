@@ -68,7 +68,7 @@ public class AddEventCommand extends Command {
             storage.saveTasks(tasks.getTasks());
             return ui.printAddedTask(eventTask, tasks);
         } catch (DateTimeParseException e) {
-            return DATE_ERROR_PROMPT + CMD_EXAMPLE;
+            throw new NexusException(DATE_ERROR_PROMPT + CMD_EXAMPLE);
         }
     }
 

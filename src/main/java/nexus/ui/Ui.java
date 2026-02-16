@@ -7,7 +7,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import nexus.Nexus;
 import nexus.exception.NexusException;
 import nexus.tasks.Deadline;
 import nexus.tasks.Event;
@@ -28,6 +27,8 @@ public class Ui {
     private static final String NEXUS_DATABANK_ENTRY_PURGED = "[NEXUS]: Databank entry purged.\n";
     private static final String NEXUS_DATABANK_UPDATED_SUCCESSFULLY = "[NEXUS]: Databank updated successfully.\n";
     private static final String NEXUS_ARROW_INDENT = ">>>> %s\n";
+    private static final String CORRUPTED_DATA_PROMPT_1 = "[NEXUS]: Corrupted data has been detected. To ";
+    private static final String CORRUPTED_DATA_PROMPT_2 = "avoid issues, the existing databank file has been wiped.\n";
     private final Scanner sc;
 
     /**
@@ -65,8 +66,8 @@ public class Ui {
         System.out.println(logo);
         simulateBoot();
         sb.append("\n");
-        sb.append(FIRST_GREETING_MESSAGE);
-        sb.append(SECOND_GREETING_MESSAGE);
+        // sb.append(FIRST_GREETING_MESSAGE);
+        // sb.append(SECOND_GREETING_MESSAGE);
         return sb.toString();
     }
 
@@ -84,19 +85,30 @@ public class Ui {
      */
     public String printTaskListGui(List<Task> taskList, String listType) throws NexusException {
         StringBuilder sb = new StringBuilder(NEXUS_ACCESSING_DATABANK);
-        List<String> availableListTypes = new ArrayList<>(Arrays.asList("all", "tasks", "deadlines", "events", "notes"));
+        List<String> possibleListTypes = new ArrayList<>(Arrays.asList("all", "tasks", "deadlines", "events", "notes"));
 
         if (taskList.isEmpty()) {
             sb.append("// NO RESULTS FOUND");
             return sb.toString();
         }
 
-        if (!availableListTypes.contains(listType)) {
+        if (!possibleListTypes.contains(listType)) {
             throw new NexusException("[NEXUS]: Invalid list type. Available: tasks/deadlines/events/notes.");
         }
 
         List<Task> filteredList = getFilteredList(taskList, listType);
 
+        return printFilteredListContents(filteredList, sb);
+    }
+
+    /**
+     * Prints the filtered task list contents to the StringBuilder.
+     *
+     * @param filteredList The filtered list of tasks.
+     * @param sb The StringBuilder to append the output to.
+     * @return The StringBuilder with the formatted output.
+     */
+    private static String printFilteredListContents(List<Task> filteredList, StringBuilder sb) {
         if (filteredList.isEmpty()) {
             sb.append("// NO RESULTS FOUND");
             return sb.toString();
@@ -211,6 +223,10 @@ public class Ui {
         StringBuilder sb = new StringBuilder();
         sb.append(errorMsg);
         return sb.toString();
+    }
+
+    public String printCorruptedDataWarning() {
+        return CORRUPTED_DATA_PROMPT_1 + CORRUPTED_DATA_PROMPT_2;
     }
 
     /**

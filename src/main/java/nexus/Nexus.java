@@ -17,19 +17,21 @@ public class Nexus {
     private TaskList tasks;
     private final Ui ui;
     private String commandType;
+    private String corruptedDataPrompt = "";
 
     /**
      * Constructs a Nexus application with the specified data file path.
      * @param filePath The path to the data file.
      */
     public Nexus(String filePath) {
-        ui = new Ui();
-        storage = new Storage(filePath);
+        this.ui = new Ui();
+        this.storage = new Storage(filePath);
         try {
-            tasks = new TaskList(storage.loadTasks());
+            this.tasks = new TaskList(this.storage.loadTasks());
         } catch (NexusException e) {
-            ui.printError(e.getMessage());
-            tasks = new TaskList();
+            this.storage.wipeData();
+            this.tasks = new TaskList();
+            this.corruptedDataPrompt = "[NEXUS]: Databank corrupted. To avoid issues, existing data has been wiped.\n";
         }
     }
 
@@ -37,7 +39,6 @@ public class Nexus {
      * Runs the Nexus application, handling user commands and interactions.
      */
     public void run() {
-        ui.printGreeting();
         boolean isExit = false;
 
         while (!isExit) {
@@ -59,7 +60,7 @@ public class Nexus {
      * Main entry point for the Nexus application.
      * @param args Command-line arguments (not used).
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NexusException {
         new Nexus(DATA_FILE_PATH).run();
     }
 
@@ -81,5 +82,12 @@ public class Nexus {
      */
     public String getCommandType() {
         return this.commandType;
+    }
+    /**
+     * Returns the prompt for corrupted data handling.
+     * @return The prompt message for corrupted data.
+     */
+    public String getCorruptedDataPrompt() {
+        return corruptedDataPrompt;
     }
 }
