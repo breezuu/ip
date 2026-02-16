@@ -153,8 +153,7 @@ public class Parser {
         if (!info.contains(" /from ") || !info.contains(" /to ")) {
             StringBuilder sb = new StringBuilder();
             sb.append("[NEXUS]: Events require BOTH '/from' and '/to' timings.\n");
-            sb.append("// EXAMPLE: event tuition /from <startTime> /to <endTime>");
-            // System.out.println("    [NEXUS]: Events require BOTH '/from' and '/to' timings.");
+            sb.append("// EXAMPLE: event race /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM");
             throw new NexusException(sb.toString());
         }
 
@@ -197,9 +196,8 @@ public class Parser {
      * Prepares a command to list tasks based on the specified type.
      * @param args The type of tasks to list (e.g. "tasks", "deadlines", "events", "notes").
      * @return A command to list tasks.
-     * @throws NexusException If the list type is invalid.
      */
-    private static Command prepareList(String args) throws NexusException {
+    private static Command prepareList(String args) {
         String type = args.trim();
         if (type.isEmpty()) {
             type = "all";

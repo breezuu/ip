@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Nexus nexus = new Nexus("data/databank.txt");
+    private final Nexus nexus = new Nexus("data/databank.txt");
 
     @Override
     public void start(Stage stage) {

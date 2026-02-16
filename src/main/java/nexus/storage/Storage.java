@@ -48,8 +48,6 @@ public class Storage {
         try {
             List<String> lines = Files.readAllLines(Paths.get(this.filePath));
 
-            int lineNumber = 1;
-
             for (String s : lines) {
                 processLine(s, loadedTasks);
             }

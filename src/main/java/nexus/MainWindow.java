@@ -26,8 +26,8 @@ public class MainWindow extends AnchorPane {
 
     private Nexus nexus;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/student-user.png"));
-    private Image nexusImage = new Image(this.getClass().getResourceAsStream("/images/nexus-chatbot.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/student-user.png"));
+    private final Image nexusImage = new Image(this.getClass().getResourceAsStream("/images/nexus-chatbot.png"));
 
     /**
      * Initializes the main window components and bindings.
@@ -79,7 +79,7 @@ public class MainWindow extends AnchorPane {
         userInput.clear();
 
         if (input.equalsIgnoreCase("bye")) {
-            PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
 
             delay.setOnFinished(event -> Platform.exit());
 

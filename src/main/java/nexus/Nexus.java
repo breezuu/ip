@@ -43,7 +43,6 @@ public class Nexus {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
-                ui.printLine();
 
                 Command cmd = Parser.parse(fullCommand);
 
@@ -52,8 +51,6 @@ public class Nexus {
                 isExit = cmd.isExit();
             } catch (NexusException e) {
                 ui.printError(e.getMessage());
-            } finally {
-                ui.printLine();
             }
         }
     }

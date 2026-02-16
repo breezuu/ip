@@ -59,16 +59,11 @@ public class Ui {
 
         sb.append(logo);
 
-        // printLine();
         System.out.println(logo);
         simulateBoot();
-        // printLine();
         sb.append("\n");
         sb.append(FIRST_GREETING_MESSAGE);
         sb.append(SECOND_GREETING_MESSAGE);
-        // System.out.println("    [NEXUS]: Greetings. I am Nexus, your personal chatbot.");
-        // System.out.println("    [NEXUS]: How can I assist you?");
-        // printLine();
         return sb.toString();
     }
 
@@ -76,28 +71,7 @@ public class Ui {
      * Prints a farewell message to the user.
      */
     public String printFarewell() {
-        // System.out.println("    [NEXUS]: Request acknowledged. Nexus is now going offline.");
         return FAREWELL_MESSAGE;
-    }
-
-    /**
-     * Prints the list of tasks to the user.
-     * @param taskList The list of tasks to be displayed.
-     */
-    public void printTaskList(List<Task> taskList) {
-        System.out.println(NEXUS_ACCESSING_DATABANK);
-
-        if (taskList.isEmpty()) {
-            System.out.println("    // NO TASKS FOUND");
-            return;
-        }
-
-        String numTasks = taskList.size() > 1 ? " TASKS" : " TASK";
-        System.out.println("    // CURRENT_TOTAL: " + taskList.size() + numTasks + "\n");
-
-        for (int i = 0; i < taskList.size(); i++) {
-            System.out.printf("    " + "TASK@ADDR_%d. %s\n", i + 1, taskList.get(i).toString());
-        }
     }
 
     /**
@@ -109,46 +83,50 @@ public class Ui {
         StringBuilder sb = new StringBuilder(NEXUS_ACCESSING_DATABANK);
 
         if (taskList.isEmpty()) {
-            sb.append("// NO TASKS FOUND");
+            sb.append("// NO RESULTS FOUND");
             return sb.toString();
         }
 
-        List<Task> filteredList = taskList.stream()
-                .filter(task -> {
-                    if (listType.equalsIgnoreCase("tasks")) {
-                        return !(task instanceof Note);
-                    }
-
-                    if (listType.equalsIgnoreCase("deadlines")) {
-                        return task instanceof Deadline;
-                    }
-
-                    if (listType.equalsIgnoreCase("events")) {
-                        return task instanceof Event;
-                    }
-
-                    if (listType.equalsIgnoreCase("notes")) {
-                        return task instanceof Note;
-                    }
-
-                    return true;
-                })
-                .toList();
+        List<Task> filteredList = getFilteredList(taskList, listType);
 
         if (filteredList.isEmpty()) {
             sb.append("// NO ").append(listType).append(" FOUND");
             return sb.toString();
         }
 
-        String label = filteredList.size() > 1 ? " ITEMS" : " ITEM";
-        sb.append("// ").append(listType.toUpperCase()).append("_TOTAL: ")
-                .append(filteredList.size()).append(label).append("\n");
+        String label = filteredList.size() > 1 ? " RESULTS" : " RESULT";
+        sb.append("// ").append("TOTAL: ").append(filteredList.size()).append(label).append("\n");
 
         String body = IntStream.range(0, filteredList.size())
                 .mapToObj(i -> "TASK@ADDR_%d. %s".formatted(i + 1, filteredList.get(i).toString()))
                 .collect(Collectors.joining("\n"));
 
         return sb.append(body).toString();
+    }
+
+    /**
+     * Filters the task list based on the specified list type.
+     *
+     * @param taskList The list of tasks to filter.
+     * @param listType The type of tasks to filter for.
+     * @return A filtered list of tasks based on the specified type.
+     */
+    private static List<Task> getFilteredList(List<Task> taskList, String listType) {
+        return taskList.stream()
+                .filter(task -> {
+                    if (listType.equalsIgnoreCase("tasks")) {
+                        return !(task instanceof Note);
+                    } else if (listType.equalsIgnoreCase("deadlines")) {
+                        return task instanceof Deadline;
+                    } else if (listType.equalsIgnoreCase("events")) {
+                        return task instanceof Event;
+                    } else if (listType.equalsIgnoreCase("notes")) {
+                        return task instanceof Note;
+                    }
+
+                    return true;
+                })
+                .toList();
     }
 
     /**
@@ -215,14 +193,6 @@ public class Ui {
     }
 
     /**
-     * Prints a line separator for formatting output.
-     * @return A string representation of a line separator.
-     */
-    public String printLine() {
-        return BORDER;
-    }
-
-    /**
      * Prints an error message to the user.
      * @param errorMsg The error message to be displayed.
      * @return A formatted string representation of the error message.
@@ -230,7 +200,6 @@ public class Ui {
     public String printError(String errorMsg) {
         StringBuilder sb = new StringBuilder();
         sb.append(errorMsg);
-        // System.out.println("    " + errorMsg);
         return sb.toString();
     }
 

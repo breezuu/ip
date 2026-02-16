@@ -13,7 +13,6 @@ public class TaskList {
     private static final String CURRENT_TOTAL_PREFIX = "// CURRENT_TOTAL: %d %s";
 
     private final ArrayList<Task> tasks;
-    private final String[] taskTypes = new String[]{"Todo", "Deadline", "Event"};
 
     /**
      * Constructs an empty TaskList.
@@ -53,14 +52,6 @@ public class TaskList {
      */
     public ArrayList<Task> getTasks() {
         return this.tasks;
-    }
-
-    /**
-     * Retrieves the task types supported by the task list.
-     * @return An array of task type names.
-     */
-    public String[] getTaskTypes() {
-        return this.taskTypes;
     }
 
     /**

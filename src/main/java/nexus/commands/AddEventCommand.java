@@ -1,6 +1,9 @@
 package nexus.commands;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 
 import nexus.exception.NexusException;
 import nexus.storage.Storage;
@@ -14,11 +17,15 @@ import nexus.ui.Ui;
 public class AddEventCommand extends Command {
     private static final String DATE_ERROR_PROMPT = "[NEXUS]: Did you follow the date and time format (12-hour)?\n";
     private static final String CMD_EXAMPLE = "// e.g. 'event race /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM'";
+    private static final String INPUT_FORMAT = "d/M/yyyy h:mm a";
+    private static final String OUTPUT_FORMAT = "MMM dd yyyy h:mm a";
 
     private final String description;
     private final String startTime;
     private final String endTime;
     private final boolean isDone;
+    private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern(INPUT_FORMAT, Locale.ENGLISH);
+    private final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern(OUTPUT_FORMAT, Locale.ENGLISH);
 
     /**
      * Constructor for AddEventCommand.
@@ -45,6 +52,12 @@ public class AddEventCommand extends Command {
     @Override
     public String run(TaskList tasks, Ui ui, Storage storage) throws NexusException {
         try {
+            boolean isDateValid = isEventDateValid(this.startTime, this.endTime);
+
+            if (!isDateValid) {
+                throw new NexusException("[NEXUS]: The event start time must be before the end time.");
+            }
+
             int prevTaskCount = tasks.getSize();
 
             Event eventTask = new Event(this.description, this.startTime, this.endTime, this.isDone);
@@ -57,6 +70,13 @@ public class AddEventCommand extends Command {
         } catch (DateTimeParseException e) {
             return DATE_ERROR_PROMPT + CMD_EXAMPLE;
         }
+    }
+
+    private boolean isEventDateValid(String startTime, String endTime) throws NexusException {
+        LocalDateTime start = LocalDateTime.parse(startTime, inputFormat);
+        LocalDateTime end = LocalDateTime.parse(endTime, inputFormat);
+
+        return end.isAfter(start);
     }
 
     /**
