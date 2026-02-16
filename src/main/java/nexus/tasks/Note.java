@@ -40,7 +40,7 @@ public class Note extends Task {
      * @return The string representation of the note for saving.
      */
     public String saveString() {
-        return "N" + " | " + this.description;
+        return "N" + " | " + (isDone ? "1" : "0") + " | " + description;
     }
 
     @Override
