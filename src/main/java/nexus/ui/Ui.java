@@ -1,11 +1,14 @@
 package nexus.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import nexus.Nexus;
+import nexus.exception.NexusException;
 import nexus.tasks.Deadline;
 import nexus.tasks.Event;
 import nexus.tasks.Note;
@@ -79,18 +82,23 @@ public class Ui {
      * @param taskList The list of tasks to be displayed.
      * @param listType The type of tasks to be displayed (e.g. "all", "tasks", "deadlines", "events", "notes").
      */
-    public String printTaskListGui(List<Task> taskList, String listType) {
+    public String printTaskListGui(List<Task> taskList, String listType) throws NexusException {
         StringBuilder sb = new StringBuilder(NEXUS_ACCESSING_DATABANK);
+        List<String> availableListTypes = new ArrayList<>(Arrays.asList("all", "tasks", "deadlines", "events", "notes"));
 
         if (taskList.isEmpty()) {
             sb.append("// NO RESULTS FOUND");
             return sb.toString();
         }
 
+        if (!availableListTypes.contains(listType)) {
+            throw new NexusException("[NEXUS]: Invalid list type. Available: tasks/deadlines/events/notes.");
+        }
+
         List<Task> filteredList = getFilteredList(taskList, listType);
 
         if (filteredList.isEmpty()) {
-            sb.append("// NO ").append(listType).append(" FOUND");
+            sb.append("// NO RESULTS FOUND");
             return sb.toString();
         }
 
@@ -114,7 +122,9 @@ public class Ui {
     private static List<Task> getFilteredList(List<Task> taskList, String listType) {
         return taskList.stream()
                 .filter(task -> {
-                    if (listType.equalsIgnoreCase("tasks")) {
+                    if (listType.equalsIgnoreCase("all")) {
+                        return true;
+                    } else if (listType.equalsIgnoreCase("tasks")) {
                         return !(task instanceof Note);
                     } else if (listType.equalsIgnoreCase("deadlines")) {
                         return task instanceof Deadline;
@@ -124,7 +134,7 @@ public class Ui {
                         return task instanceof Note;
                     }
 
-                    return true;
+                    return false;
                 })
                 .toList();
     }

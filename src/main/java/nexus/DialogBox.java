@@ -3,6 +3,10 @@ package nexus;
 import java.io.IOException;
 import java.util.Collections;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -66,6 +71,10 @@ public class DialogBox extends HBox {
         return db;
     }
 
+    /**
+     * Changes the style of the dialog box based on the command type.
+     * Adds appropriate CSS classes for different command types.
+     */
     private void changeDialogStyle(String commandType) {
         if (commandType == null) {
             return;
@@ -73,18 +82,50 @@ public class DialogBox extends HBox {
         switch(commandType) {
         case "AddCommand":
             dialog.getStyleClass().add("add-label");
+            triggerSuccessAnimation();
             break;
         case "ChangeMarkCommand":
             dialog.getStyleClass().add("marked-label");
+            triggerSuccessAnimation();
             break;
         case "DeleteCommand":
             dialog.getStyleClass().add("delete-label");
+            triggerSuccessAnimation();
             break;
         case "Error":
             dialog.getStyleClass().add("error-label");
+            triggerErrorAnimation();
             break;
         default:
             // Do nothing
         }
+    }
+
+    private void triggerSuccessAnimation() {
+        FadeTransition flash = new FadeTransition(Duration.millis(150), this);
+        flash.setFromValue(1.0);
+        flash.setToValue(0.6);
+        flash.setAutoReverse(true);
+        flash.setCycleCount(2);
+
+        flash.play();
+    }
+
+    /**
+     * Triggers a visual error animation for the dialog box.
+     * Flickers the opacity to indicate an error.
+     */
+    private void triggerErrorAnimation() {
+        Timeline flicker = new Timeline(
+                new KeyFrame(Duration.millis(0), e -> this.setOpacity(1.0)),
+                new KeyFrame(Duration.millis(50), e -> this.setOpacity(0.4)),
+                new KeyFrame(Duration.millis(100), e -> this.setOpacity(0.9)),
+                new KeyFrame(Duration.millis(150), e -> this.setOpacity(0.3)),
+                new KeyFrame(Duration.millis(250), e -> this.setOpacity(1.0)),
+                new KeyFrame(Duration.millis(300), e -> this.setOpacity(0.8)),
+                new KeyFrame(Duration.millis(350), e -> this.setOpacity(0.2)),
+                new KeyFrame(Duration.millis(400), e -> this.setOpacity(1.0))
+        );
+        flicker.play();
     }
 }

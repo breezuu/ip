@@ -9,6 +9,7 @@ import nexus.commands.Command;
 import nexus.commands.DeleteCommand;
 import nexus.commands.ExitCommand;
 import nexus.commands.FindCommand;
+import nexus.commands.HelpCommand;
 import nexus.commands.ListCommand;
 import nexus.commands.MarkCommand;
 import nexus.commands.UnmarkCommand;
@@ -29,32 +30,40 @@ public class Parser {
         String keyword = split[0].toLowerCase();
         String args = split.length > 1 ? split[1].trim() : "";
 
-        switch (keyword) {
-        case "bye":
+        CommandType cmdType = CommandType.getType(keyword);
+
+        if (cmdType == CommandType.INVALID) {
+            throw new NexusException("// ERROR: INVALID COMMAND. PLEASE TRY AGAIN.");
+        }
+
+        switch (cmdType) {
+        case BYE:
             return new ExitCommand();
-        case "list":
+        case LIST:
             return prepareList(args);
-        case "mark":
+        case MARK:
             return new MarkCommand(parseIndex(split));
-        case "unmark":
+        case UNMARK:
             return new UnmarkCommand(parseIndex(split));
-        case "todo":
+        case TODO:
             return prepareTodo(args);
-        case "deadline":
+        case DEADLINE:
             return prepareDeadline(args);
-        case "event":
+        case EVENT:
             return prepareEvent(args);
-        case "delete":
+        case DELETE:
             return new DeleteCommand(parseIndex(split));
-        case "check":
+        case CHECK:
             return new CheckCommand(parseDate(args));
-        case "find":
+        case FIND:
             return new FindCommand(parseKeyword(args));
-        case "note":
+        case NOTE:
             return prepareNote(args);
+        case HELP:
+            return new HelpCommand();
         default:
             assert false : "Unknown command type";
-            throw new NexusException("INVALID COMMAND. PLEASE TRY AGAIN.");
+            throw new NexusException("// ERROR: INVALID COMMAND. PLEASE TRY AGAIN.");
         }
     }
 
@@ -67,8 +76,8 @@ public class Parser {
     public static int parseIndex(String[] split) throws NexusException {
         if (split.length < 2 || split[1].isBlank()) {
             StringBuilder sb = new StringBuilder();
-            sb.append("[NEXUS]: Please specify the task number you wish to mark or delete.\n");
-            sb.append("// EXAMPLE: mark 6, delete 7");
+            sb.append("[NEXUS]: Please specify a valid task number.\n");
+            sb.append("// EXAMPLE: mark 6, unmark 7, delete 8");
             throw new NexusException(sb.toString());
         }
 
@@ -219,7 +228,7 @@ public class Parser {
      */
     private static Command prepareList(String args) {
         String type = args.trim();
-        if (type.isEmpty()) {
+        if (type.isBlank()) {
             type = "all";
         }
         return new ListCommand(type);
