@@ -45,14 +45,19 @@ public class MainWindow extends AnchorPane {
      * @param n Nexus instance.
      */
     public void setNexus(Nexus n) {
-        nexus = n;
+        this.nexus = n;
         String firstGreeting = "// INITIALIZING NEXUS... [OK] \n// LOADING DATABANK... [OK]";
         String secondGreeting = "[NEXUS]: Greetings. I am Nexus, your personal chatbot.\nHow can I assist you today?";
+        String corruptedDataPrompt = this.nexus.getCorruptedDataPrompt();
 
+        if (!corruptedDataPrompt.isEmpty()) {
+            dialogContainer.getChildren().add(
+                    DialogBox.getNexusDialog(corruptedDataPrompt, nexusImage, "Error")
+            );
+        }
         dialogContainer.getChildren().add(
                 DialogBox.getNexusDialog(firstGreeting, nexusImage, "greeting")
         );
-
         dialogContainer.getChildren().add(
                 DialogBox.getNexusDialog(secondGreeting, nexusImage, "greeting")
         );
@@ -79,8 +84,9 @@ public class MainWindow extends AnchorPane {
                     DialogBox.getNexusDialog(response, nexusImage, commandType)
             );
         } catch (NexusException e) {
-            // return ui.printError(e.getMessage());
-            dialogContainer.getChildren().add(DialogBox.getNexusDialog(e.getMessage(), nexusImage, "Error"));
+            dialogContainer.getChildren().add(
+                    DialogBox.getNexusDialog(e.getMessage(), nexusImage, "Error")
+            );
         }
 
         userInput.clear();

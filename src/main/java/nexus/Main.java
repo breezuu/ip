@@ -31,7 +31,7 @@ public class Main extends Application {
             stage.setScene(scene);
 
             // Set title
-            stage.setTitle("Nexus");
+            stage.setTitle("Nexus - Your Personal Task Manager");
 
             // Inject the Nexus instance
             fxmlLoader.<MainWindow>getController().setNexus(nexus);

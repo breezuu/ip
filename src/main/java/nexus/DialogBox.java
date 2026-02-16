@@ -5,7 +5,6 @@ import java.util.Collections;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
-import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

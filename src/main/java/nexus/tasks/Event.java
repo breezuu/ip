@@ -2,20 +2,23 @@ package nexus.tasks;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.Locale;
 
 /**
  * Event class which represents a task with a start and end time.
  */
 public class Event extends Task {
-    private static final String INPUT_FORMAT = "d/M/yyyy h:mm a";
-    private static final String OUTPUT_FORMAT = "MMM dd yyyy h:mm a";
-    private static final String DATE_FORMAT = "d/M/yyyy";
+    private static final String INPUT_FORMAT = "d/M/uuuu h:mm a";
+    private static final String OUTPUT_FORMAT = "MMM dd uuuu h:mm a";
+    private static final String DATE_FORMAT = "d/M/uuuu";
 
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
-    private final DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern(INPUT_FORMAT, Locale.ENGLISH);
-    private final DateTimeFormatter outputFormat = DateTimeFormatter.ofPattern(OUTPUT_FORMAT, Locale.ENGLISH);
+    private final DateTimeFormatter strictInput = DateTimeFormatter.ofPattern(INPUT_FORMAT, Locale.ENGLISH)
+            .withResolverStyle(ResolverStyle.STRICT);
+    private final DateTimeFormatter strictOutput = DateTimeFormatter.ofPattern(OUTPUT_FORMAT, Locale.ENGLISH)
+            .withResolverStyle(ResolverStyle.STRICT);
 
     /**
      * Constructs an Event object with the specified description, start time, end time, and completion status.
@@ -26,8 +29,8 @@ public class Event extends Task {
      */
     public Event(String desc, String start, String end, boolean isDone) {
         super(desc, isDone);
-        this.startTime = LocalDateTime.parse(start, inputFormat);
-        this.endTime = LocalDateTime.parse(end, inputFormat);
+        this.startTime = LocalDateTime.parse(start, strictInput);
+        this.endTime = LocalDateTime.parse(end, strictInput);
     }
 
     /**
@@ -56,8 +59,8 @@ public class Event extends Task {
      */
     @Override
     public String saveString() {
-        return "E" + " | " + (isDone ? "1" : "0") + " | " + description + " | " + startTime.format(inputFormat)
-                + " | " + endTime.format(inputFormat);
+        return "E" + " | " + (isDone ? "1" : "0") + " | " + description + " | " + startTime.format(strictInput)
+                + " | " + endTime.format(strictInput);
     }
 
     /**
@@ -66,7 +69,7 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + startTime.format(outputFormat) + " to: "
-                + endTime.format(outputFormat) + ")";
+        return "[E]" + super.toString() + " (from: " + startTime.format(strictOutput) + " to: "
+                + endTime.format(strictOutput) + ")";
     }
 }

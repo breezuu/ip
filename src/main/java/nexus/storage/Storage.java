@@ -1,10 +1,12 @@
 package nexus.storage;
 
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +54,7 @@ public class Storage {
                 processLine(s, loadedTasks);
             }
 
-        } catch (IOException e) {
+        } catch (DateTimeException | IOException e) {
             throw new NexusException(e.getMessage());
         }
 
@@ -147,6 +149,17 @@ public class Storage {
             }
         } catch (IOException e) {
             throw new NexusException(e.getMessage());
+        }
+    }
+
+    /**
+     * Wipes the storage TXT file by truncating the file to zero length.
+     */
+    public void wipeData() {
+        try {
+            new FileOutputStream(this.filePath).close();
+        } catch (IOException e) {
+            System.out.println("// ERROR: File not found.");
         }
     }
 }
