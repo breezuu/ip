@@ -49,7 +49,7 @@ public class Parser {
         case "check":
             return new CheckCommand(parseDate(args));
         case "find":
-            return new FindCommand(args);
+            return new FindCommand(parseKeyword(args));
         case "note":
             return prepareNote(args);
         default:
@@ -86,14 +86,33 @@ public class Parser {
      * @throws NexusException If the date is invalid or cannot be parsed.
      */
     public static String parseDate(String date) throws NexusException {
-        if (date.length() < 2 || date.isBlank()) {
+        if (date.isBlank()) {
             StringBuilder sb = new StringBuilder();
+            sb.append("// ERROR: NO DATE SPECIFIED\n");
             sb.append("[NEXUS]: Please specify the date you wish to check.\n");
             sb.append("// EXAMPLE: check 1/1/2002");
             throw new NexusException(sb.toString());
         }
 
         return date;
+    }
+
+    /**
+     * Parses the keyword from the user input.
+     * @param keyword Keyword string provided by the user.
+     * @return Parsed keyword string.
+     * @throws NexusException If the keyword is invalid or cannot be parsed.
+     */
+    public static String parseKeyword(String keyword) throws NexusException {
+        if (keyword.isBlank()) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("// ERROR: NO KEYWORD SPECIFIED\n");
+            sb.append("[NEXUS]: Please specify a keyword.\n");
+            sb.append("// EXAMPLE: find exam");
+            throw new NexusException(sb.toString());
+        }
+
+        return keyword;
     }
 
     /**
@@ -152,6 +171,7 @@ public class Parser {
     private static Command prepareEvent(String info) throws NexusException {
         if (!info.contains(" /from ") || !info.contains(" /to ")) {
             StringBuilder sb = new StringBuilder();
+            sb.append("// ERROR: INVALID EVENT TASK\n");
             sb.append("[NEXUS]: Events require BOTH '/from' and '/to' timings.\n");
             sb.append("// EXAMPLE: event race /from 01/01/2002 1:00 PM /to 01/01/2002 2:00 PM");
             throw new NexusException(sb.toString());

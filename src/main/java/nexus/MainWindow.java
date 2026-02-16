@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import nexus.exception.NexusException;
 
 /**
  * Controller for the main GUI.
@@ -69,13 +70,19 @@ public class MainWindow extends AnchorPane {
             return;
         }
 
-        String response = nexus.getResponse(input);
-        String commandType = nexus.getCommandType();
+        try {
+            String response = nexus.getResponse(input);
+            String commandType = nexus.getCommandType();
 
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getNexusDialog(response, nexusImage, commandType)
-        );
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getNexusDialog(response, nexusImage, commandType)
+            );
+        } catch (NexusException e) {
+            // return ui.printError(e.getMessage());
+            dialogContainer.getChildren().add(DialogBox.getNexusDialog(e.getMessage(), nexusImage, "Error"));
+        }
+
         userInput.clear();
 
         if (input.equalsIgnoreCase("bye")) {
