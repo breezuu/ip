@@ -1,15 +1,13 @@
-# Nexus - Your Personal Task Manager :robot:
-
---------------------------------------------------------------------------
+# Nexus - Your Personal Task Manager 🤖
 
 **Nexus** is a sleek, futuristic GUI task manager that helps you manage your To-Do list, deadlines, events and more.
 
-## UI Preview :framed_picture:
+## UI Preview 🖼️
 ![UI Preview](Ui.png)
 
 --------------------------------------------------------------------------
 
-## Features :star:
+## Features ⭐
 - **Manage Tasks**: Add/Delete To-Dos, Deadlines, Events and Notes
 - **Track Tasks**: Mark tasks as completed or incomplete
 - **Search Tasks**: Quickly find tasks using keywords
@@ -19,7 +17,7 @@
 
 --------------------------------------------------------------------------
 
-## Command Overview :mag:
+## Command Overview 🔍
 | Command  | Description                                                    | Format                                              | Example                                                                     |
 |----------|----------------------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------------------------------|
 | todo     | Add a To-Do task                                               | todo <description>                                  | todo CS2103 iP Smoke Testing                                                |
@@ -37,7 +35,7 @@
 
 --------------------------------------------------------------------------
 
-## Command Summary :computer:
+## Command Summary 📋
 ### Adding a Task
 #### To-Do:
 `todo Catch up with overseas friends`
@@ -50,6 +48,8 @@
 
 #### Note:
 `note Finish EG1311 Week 6 Lecture Videos`
+
+--------------------------------------------------------------------------
 
 ### Managing Tasks
 #### List all tasks:
@@ -79,6 +79,8 @@
 #### Check for Tasks on a Certain Date:
 `check 2/2/2026`
 
+--------------------------------------------------------------------------
+
 ### Quality-of-Life Features
 #### Get Help:
 `help`
@@ -92,13 +94,15 @@
 
 --------------------------------------------------------------------------
 
-## Getting Started :rocket:
+## Getting Started 🚀
 > [!WARNING]
 > Java 17 (or above) is required to run Nexus.
+
 Download `nexus.jar` from the [releases page](https://github.com/breezuu/ip/releases/tag/A-Release).
+
 Run the application by typing `java -jar nexus.jar` in your terminal.
 
 --------------------------------------------------------------------------
 
-## Acknowledgements :1st_place_medal:
+## Acknowledgements 🥇
 - This project is based on Project Duke as part of NUS' CS2103 Software Engineering module.
