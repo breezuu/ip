@@ -23,14 +23,14 @@
 |----------|----------------------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------------------------------|
 | todo     | Add a To-Do task                                               | todo <description>                                  | todo CS2103 iP Smoke Testing                                                |
 | deadline | Add a task with a deadline                                     | deadline <description> /by <date>                   | deadline CS2103 Weekly Quiz /by 2/2/2026 4:00 PM                            |
-| event    | Add a task with a start and end time                           | event <description> /from <startTime> /to <endTime> | event CS2103 Project Meeting /from 20/2/2026 12:00 PM /to 20/2/2026 2:00 PM |
+| event    | Add a task with a start date and end date                      | event <description> /from <startDate> /to <endDate> | event CS2103 Project Meeting /from 20/2/2026 12:00 PM /to 20/2/2026 2:00 PM |
 | note     | Add a note                                                     | note <description>                                  | note SIP Application                                                        |
-| list     | Display all tasks                                              | list [tasks] [deadlines] [events] [notes]           | list deadlines                                                              |
+| list     | Display (all) tasks                                            | list [tasks] [deadlines] [events] [notes]           | list deadlines                                                              |
 | mark     | Mark a task as completed                                       | mark <index>                                        | mark 6                                                                      |
 | unmark   | Unmark a task                                                  | unmark <index>                                      | unmark 7                                                                    |
 | delete   | Delete a task                                                  | delete <index>                                      | delete 2                                                                    |
 | find     | Find tasks by keyword                                          | find <keyword>                                      | find CS2103                                                                 |
-| check    | Look for tasks occurring on a certain date                     | check <date>                                        | check 2/2/2026                                                              |                                                             |
+| check    | Look for tasks occurring on a certain date                     | check <date>                                        | check 2/2/2026                                                              |
 | help     | Opens up the help window, showing a list of available commands | help                                                | help                                                                        |
 | bye      | Exit the application                                           | bye                                                 | bye                                                                         |
 
