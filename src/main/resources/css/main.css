@@ -5,54 +5,108 @@
     -fx-background-size: cover;
 }
 
-
 .text-field {
-    -fx-background-color: #0b1a1c;
-    -fx-background-radius: 15;
-    -fx-border-color: #00ffcc;
-    -fx-border-radius: 15;
-    -fx-border-width: 1;
-    -fx-text-fill: #00ffcc;
-    -fx-font-family: "Courier New";
+    -fx-background-color: #4A4A4A;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-prompt-text-fill: #A0A0A0;
+    -fx-background-insets: 5;
+
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+
+    -fx-border-color: #00E5FF;
+    -fx-border-width: 1.5;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.6), 10, 0, 0, 0);
+
+    -fx-padding: 8 15 8 15;
+}
+
+.text-field:focused {
+    -fx-background-color: #555555;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.9), 15, 0, 0, 0);
 }
 
 .button {
-    -fx-background-color: #00ffcc;
-    -fx-background-radius: 15;
-    -fx-text-fill: #0b1a1c;
+    -fx-background-color:
+            #00E5FF,
+            linear-gradient(to bottom, #3a3a3a 0%, #222222 100%),
+            linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, transparent 50%);
+    -fx-background-insets: 0, 1, 1;
+
+    -fx-border-color: #00E5FF;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+
+    -fx-text-fill: #00E5FF;
+    -fx-font-family: "Georgia";
     -fx-font-weight: bold;
-    -fx-font-style: italic;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.3), 5, 0, 0, 0);
+
+    -fx-cursor: hand;
+    -fx-transition: 0.3s;
 }
 
 .button:hover {
-    -fx-background-color: #00cca3;
-    -fx-cursor: hand;
+    -fx-background-color: #00E5FF;
+    -fx-text-fill: #1A1A1A;
+
+    -fx-effect: dropshadow(three-pass-box, #00E5FF, 15, 0, 0, 0);
 }
 
 .button:pressed {
-    -fx-background-color:orange;
-    -fx-font-size: 20px;
+    -fx-scale-x: 0.9;
+    -fx-scale-y: 0.9;
 }
 
 .scroll-pane,
 .scroll-pane .viewport {
+    -fx-border-color: transparent;
+    -fx-padding: 0;
     -fx-background-color: transparent;
 }
 
-/* Change width of scroll bar. */
+.scroll-pane .scroll-bar:vertical,
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
 .scroll-bar {
     -fx-font-size: 10px;
     -fx-background-color: main-color;
 }
 
-.scroll-bar .thumb {
-    -fx-background-color: #00ffcc;
-    -fx-background-radius: 1em;
+.scroll-bar .track {
+    -fx-background-color: #1a1e26;
+    -fx-border-color: transparent;
+    -fx-background-radius: 5;
 }
 
-/* Hides the increment and decrement buttons. */
-.scroll-bar .increment-button,
-.scroll-bar .decrement-button {
-    -fx-pref-height: 0;
-    -fx-opacity: 0;
+.scroll-bar .thumb {
+    -fx-background-color: #00E5FF;
+    -fx-background-insets: 2;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 229, 255, 0.4), 5, 0, 0, 0);
+}
+
+.scroll-pane .thumb:hover {
+    -fx-background-color: #80f0ff;
+    -fx-effect: dropshadow(three-pass-box, #00E5FF, 10, 0, 0, 0);
+}
+
+.scroll-pane .increment-button, .scroll-pane .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-pane .increment-arrow, .scroll-pane .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: transparent;
 }
