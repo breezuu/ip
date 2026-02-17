@@ -1,30 +1,104 @@
-# Nexus User Guide
+# Nexus - Your Personal Task Manager :robot:
 
-// Update the title above to match the actual product name
+--------------------------------------------------------------------------
 
-// Product screenshot goes here
+**Nexus** is a sleek, futuristic GUI task manager that helps you manage your To-Do list, deadlines, events and more.
 
-// Product intro goes here
+## UI Preview :framed_picture:
+![UI Preview](Ui.png)
 
-## Adding deadlines
+--------------------------------------------------------------------------
 
-// Describe the action and its outcome.
+## Features :star:
+- **Manage Tasks**: Add/Delete To-Dos, Deadlines, Events and Notes
+- **Track Tasks**: Mark tasks as completed or incomplete
+- **Search Tasks**: Quickly find tasks using keywords
+- **User-Friendly**: Provides
+- **State-of-the-Art Awareness**: Warns you when your commands are invalid or when your data is corrupted
+- **Persistence**: All tasks are saved after exiting the application
 
-// Give examples of usage
+--------------------------------------------------------------------------
 
-Example: `keyword (optional arguments)`
+## Command Overview :mag:
+| Command  | Description                                                    | Format                                              | Example                                                                     |
+|----------|----------------------------------------------------------------|-----------------------------------------------------|-----------------------------------------------------------------------------|
+| todo     | Add a To-Do task                                               | todo <description>                                  | todo CS2103 iP Smoke Testing                                                |
+| deadline | Add a task with a deadline                                     | deadline <description> /by <date>                   | deadline CS2103 Weekly Quiz /by 2/2/2026 4:00 PM                            |
+| event    | Add a task with a start and end time                           | event <description> /from <startTime> /to <endTime> | event CS2103 Project Meeting /from 20/2/2026 12:00 PM /to 20/2/2026 2:00 PM |
+| note     | Add a note                                                     | note <description>                                  | note SIP Application                                                        |
+| list     | Display all tasks                                              | list [tasks] [deadlines] [events] [notes]           | list deadlines                                                              |
+| mark     | Mark a task as completed                                       | mark <index>                                        | mark 6                                                                      |
+| unmark   | Unmark a task                                                  | unmark <index>                                      | unmark 7                                                                    |
+| delete   | Delete a task                                                  | delete <index>                                      | delete 2                                                                    |
+| find     | Find tasks by keyword                                          | find <keyword>                                      | find CS2103                                                                 |
+| check    | Look for tasks occurring on a certain date                     | check <date>                                        | check 2/2/2026                                                              |                                                             |
+| help     | Opens up the help window, showing a list of available commands | help                                                | help                                                                        |
+| bye      | Exit the application                                           | bye                                                 | bye                                                                         |
 
-// A description of the expected outcome goes here
+--------------------------------------------------------------------------
 
-```
-expected output
-```
+## Command Summary :computer:
+### Adding a Task
+#### To-Do:
+`todo Catch up with overseas friends`
 
-## Feature ABC
+#### Deadline:
+`deadline CS2103 Weekly Quiz /by 2/2/2026 4:00 PM`
 
-// Feature details
+#### Event:
+`event CS2103 Project Meeting /from 20/2/2026 12:00 PM /to 20/2/2026 2:00 PM`
 
+#### Note:
+`note Finish EG1311 Week 6 Lecture Videos`
 
-## Feature XYZ
+### Managing Tasks
+#### List all tasks:
+`list`
 
-// Feature details
+#### List all Deadlines:
+`list deadlines`
+
+#### List all Events:
+`list events`
+
+#### List all Notes:
+`list notes`
+
+#### Mark Task as Completed:
+`mark 1`
+
+#### Unmark Task:
+`unmark 2`
+
+#### Delete Task:
+`delete 3`
+
+#### Search for Tasks by Keyword:
+`find quiz`
+
+#### Check for Tasks on a Certain Date:
+`check 2/2/2026`
+
+### Quality-of-Life Features
+#### Get Help:
+`help`
+
+#### Exit Application:
+`bye`
+
+> [!IMPORTANT]
+> The date and time format must be in `dd/MM/yyyy HH:mm a`.
+> _e.g._ `18/2/2026 10:00 AM`, `20/10/2026 11:00 PM`
+
+--------------------------------------------------------------------------
+
+## Getting Started :rocket:
+> [!WARNING]
+> Java 17 (or above) is required to run Nexus.
+Download `nexus.jar` from the [releases page](https://github.com/breezuu/ip/releases/tag/A-Release).
+Run the application by typing `java -jar nexus.jar` in your terminal.
+
+--------------------------------------------------------------------------
+
+## Acknowledgements :1st_place_medal:
+- This project is based on Project Duke as part of NUS' CS2103 Software Engineering module.
