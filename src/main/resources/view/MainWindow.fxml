@@ -16,7 +16,7 @@
                 prefHeight="45.0" prefWidth="75.0" text="Send" />
     </HBox>
 
-    <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" hvalue="1.0" prefHeight="557.0" prefWidth="400.0" vvalue="1.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" hvalue="1.0" prefHeight="557.0" prefWidth="400.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox fx:id="dialogContainer" prefHeight="552.0" prefWidth="388.0" style="-fx-padding: 0 5 0 0;" />
     </ScrollPane>
 </AnchorPane>

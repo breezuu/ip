@@ -35,8 +35,6 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     public void initialize() {
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-
         scrollPane.setFitToWidth(true);
     }
 
@@ -88,7 +86,8 @@ public class MainWindow extends AnchorPane {
                     DialogBox.getNexusDialog(response, nexusImage, commandType)
             );
         } catch (NexusException e) {
-            dialogContainer.getChildren().add(
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
                     DialogBox.getNexusDialog(e.getMessage(), nexusImage, "Error")
             );
         }
