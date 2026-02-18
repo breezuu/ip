@@ -89,19 +89,25 @@
 #### Exit Application:
 `bye`
 
-> [!IMPORTANT]
-> The date and time format must be in `dd/MM/yyyy HH:mm a`.
-> _e.g._ `18/2/2026 10:00 AM`, `20/10/2026 11:00 PM`
+> ℹ️ **IMPORTANT:** The **date** and **time** format must be in `dd/MM/yyyy HH:mm a`.
+> (_e.g._ `18/2/2026 10:00 AM`, `20/10/2026 11:00 PM`)
 
 --------------------------------------------------------------------------
 
 ## Getting Started 🚀
-> [!WARNING]
-> Java 17 (or above) is required to run Nexus.
+> ⚠️ **WARNING:** Java 17 (or above) is required to run Nexus.
 
-Download `nexus.jar` from the [releases page](https://github.com/breezuu/ip/releases/tag/A-Release).
+1. Download the latest `nexus.jar` file from the [releases page](https://github.com/breezuu/ip/releases/tag/A-Release).
 
-Run the application by typing `java -jar nexus.jar` in your terminal.
+2. Copy the JAR file to the folder you wish to use as the home folder.
+
+3. Open a terminal of your choice and navigate to the home folder by typing `cd` followed by the folder name (e.g. `cd testFolder`).
+
+4. Run the application by typing `java -jar nexus.jar` in your terminal.
+
+5. A GUI window should appear, similar to the one shown in the UI Preview section.
+
+6. Enjoy using Nexus! 🔥
 
 --------------------------------------------------------------------------
 
