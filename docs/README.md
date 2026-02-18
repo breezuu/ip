@@ -101,7 +101,7 @@
 
 2. Copy the JAR file to the folder you wish to use as the home folder.
 
-3. Open a terminal of your choice and navigate to the home folder by typing `cd` followed by the folder name (e.g. `cd testFolder`).
+3. Open a terminal of your choice and navigate to the home folder by typing `cd` followed by the folder name (_e.g._ `cd testFolder`).
 
 4. Run the application by typing `java -jar nexus.jar` in your terminal.
 
