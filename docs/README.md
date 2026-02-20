@@ -113,3 +113,22 @@
 
 ## Acknowledgements 🥇
 - This project is based on Project Duke as part of NUS' CS2103 Software Engineering module.
+
+--------------------------------------------------------------------------
+
+## Image Acknowledgements 🥇
+![Nexus Chatbot Image](https://github.com/breezuu/ip/blob/master/src/main/resources/images/nexus-chatbot.png?raw=true)
+- Nexus chatbot image reused from Shutterstock.com
+- _Image Credit:_ https://www.shutterstock.com/image-vector/chat-bot-icon-virtual-smart-600nw-2478937553.jpg
+
+--------------------------------------------------------------------------
+
+![User Image](https://github.com/breezuu/ip/blob/master/src/main/resources/images/user.png?raw=true)
+- User image reused from Flaticon.com
+- _Image Credit:_ https://cdn-icons-png.flaticon.com/512/3710/3710582.png
+
+--------------------------------------------------------------------------
+
+![GUI Background Wallpaper](https://github.com/breezuu/ip/blob/master/src/main/resources/images/solarized-dark-wallpaper.png?raw=true)
+- GUI background wallpaper reused from Reddit.com
+- _Image Credit (Reddit - u/G4merXsquaD):_ https://www.reddit.com/r/wallpaper/comments/owai26/solarized_dark_3840x2160/
